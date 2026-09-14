@@ -73,9 +73,9 @@ INDEX = """<!doctype html><meta charset=utf-8>
  <li>Download and <b>unzip</b> it.</li>
  <li>Open a terminal in the unzipped <code>workshop</code> folder.</li>
  <li>Run:<pre>python3 check_setup.py</pre></li>
- <li>Then:<pre>python3 run_tests.py</pre></li>
+ <li>Then:<pre>python3 run_tests.py bugs</pre></li>
 </ol>
-<p>You should see <b>10 passing, 10 failing</b>.
+<p>You should see <b>18 passing, 16 failing</b>.
 <b>The failures are the workshop.</b></p>
 <p>No Python? Windows: install <b>Python 3.12</b> from the Microsoft Store
 (no admin rights needed). Mac/Linux: you already have it.</p>

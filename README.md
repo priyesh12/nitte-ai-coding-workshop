@@ -10,7 +10,7 @@ python3 check_setup.py            # 10 seconds, tells you what's missing
 python3 run_tests.py bugs/tier0   # your first broken programs
 ```
 
-You should see **10 passing, 10 failing**. The failures are the workshop.
+You should see failing tests. **The failures are the workshop.**
 
 ## The house rule
 
@@ -27,13 +27,18 @@ confident answer to the wrong question, and you won't be able to defend it.
 | Path | What's in it |
 | --- | --- |
 | [CURRICULUM.md](CURRICULUM.md) | The full 18-hour plan, all three days |
-| [bugs/](bugs/) | Broken programs, tier 0 (2 min) → tier 4 (40 min) |
-| [placement_tracker/](placement_tracker/) | The spine codebase — Day 2 & 3 live here |
-| [handouts/](handouts/) | Student reference sheets |
-| [harnesses/](harnesses/) | The zero-cost AI tool lab (Day 2) |
-| [slides/](slides/) | HTML decks for the projector — open in any browser, works offline |
-| [instructor/](instructor/) | Run sheets, answer keys — spoilers inside |
+| [bugs/](bugs/) | 10 broken programs, tier 0 (2 min) → tier 4 (40 min) |
+| [placement_tracker/](placement_tracker/) | The spine codebase — Days 2 & 3 live here |
+| [day2/sabotage/](day2/sabotage/) | AI output that looks perfect and isn't |
+| [day3/mock/](day3/mock/) | The timed mock assessment + brief |
+| [handouts/](handouts/) | Traceback anatomy, prompt templates, AI traps, hypothesis sheet |
+| [harnesses/](harnesses/) | The zero-cost AI tool lab and rotation scorecard |
+| [slides/](slides/) | One HTML deck per day — open in any browser, works offline |
+| [AGENTS.md](AGENTS.md) | Rules for any AI agent in this repo (invariant #1) |
 | [run_tests.py](run_tests.py) | Tiny stdlib test runner. No pytest needed. |
+
+> `instructor/` — run sheets, answer keys, hidden tests and the grader — is
+> deliberately **not** in this repo. Students clone this.
 
 ## The three days
 

@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Day 3 — DELIVER</title>
+<style>
+  :root{
+    --bg:#0f1115; --fg:#f2f4f8; --dim:#98a2b3; --accent:#4ade80;
+    --warn:#fbbf24; --bad:#f87171; --panel:#1a1d24; --line:#2a2f3a;
+    --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{margin:0;background:var(--bg);color:var(--fg);
+       font:400 16px/1.55 system-ui,-apple-system,Segoe UI,sans-serif;
+       overflow:hidden}
+  .slide{position:absolute;inset:0;display:none;flex-direction:column;
+         justify-content:center;padding:5vh 7vw;animation:in .18s ease-out}
+  .slide.on{display:flex}
+  @keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+  h1{font-size:clamp(2.2rem,6.5vw,5rem);line-height:1.05;margin:0 0 .4em;
+     letter-spacing:-.02em}
+  h2{font-size:clamp(1.5rem,3.6vw,2.9rem);line-height:1.15;margin:0 0 .7em;
+     letter-spacing:-.015em}
+  p,li{font-size:clamp(1rem,1.9vw,1.6rem);margin:.45em 0}
+  ul,ol{padding-left:1.3em;margin:.3em 0}
+  .kicker{color:var(--accent);font:700 clamp(.8rem,1.3vw,1.1rem)/1 var(--mono);
+          letter-spacing:.18em;text-transform:uppercase;margin-bottom:1.4em}
+  .dim{color:var(--dim)}
+  .big{font-size:clamp(1.4rem,3vw,2.6rem);font-weight:700;line-height:1.3}
+  pre{font-family:var(--mono);background:var(--panel);border:1px solid var(--line);
+      border-left:4px solid var(--accent);border-radius:10px;
+      padding:clamp(.8rem,2vw,1.6rem);font-size:clamp(.78rem,1.55vw,1.35rem);
+      line-height:1.6;overflow-x:auto;margin:.7em 0}
+  code{font-family:var(--mono);background:var(--panel);padding:.12em .4em;
+       border-radius:5px;font-size:.92em}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(.8rem,2.4vw,2.4rem)}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:12px;
+        padding:clamp(.9rem,2vw,1.6rem)}
+  .card h3{margin:0 0 .5em;font-size:clamp(1rem,1.9vw,1.6rem)}
+  .ok{border-top:4px solid var(--accent)} .no{border-top:4px solid var(--bad)}
+  .ok h3{color:var(--accent)} .no h3{color:var(--bad)}
+  table{border-collapse:collapse;width:100%;font-size:clamp(.82rem,1.6vw,1.35rem)}
+  th,td{text-align:left;padding:.5em .7em;border-bottom:1px solid var(--line)}
+  th{color:var(--dim);font:600 .85em/1 var(--mono);text-transform:uppercase;
+     letter-spacing:.1em}
+  .num{color:var(--accent);font-family:var(--mono);font-weight:700}
+  .hl{color:var(--accent);font-weight:700}
+  .warn{color:var(--warn);font-weight:700}
+  .center{text-align:center;align-items:center}
+  .quote{font-size:clamp(1.2rem,2.8vw,2.4rem);line-height:1.35;font-weight:600;
+         border-left:5px solid var(--accent);padding-left:.8em;margin:.4em 0}
+  #bar{position:fixed;left:0;bottom:0;height:3px;background:var(--accent);
+       transition:width .18s;z-index:10}
+  #num{position:fixed;right:1.4vw;bottom:1.4vh;color:var(--dim);
+       font:600 .85rem/1 var(--mono);z-index:10}
+  #hint{position:fixed;left:1.4vw;bottom:1.4vh;color:var(--dim);
+        font:400 .75rem/1 var(--mono);z-index:10;opacity:.6}
+  @media(max-width:700px){.grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+
+<div class="slide on center">
+  <div class="kicker">Day 3 of 3</div>
+  <h1>DELIVER</h1>
+  <p class="big dim">Ship it. Then defend it.</p>
+</div>
+
+<div class="slide center">
+  <div class="kicker">Read this before anything else</div>
+  <h1 class="warn">You will be called<br>at random this afternoon.</h1>
+  <p class="big">To explain your own code, line by line.</p>
+  <p class="quote">Any line you cannot explain is struck from your
+     submission — even if the tests pass.</p>
+</div>
+
+<div class="slide">
+  <div class="kicker">Today</div>
+  <h2>The shape of the day</h2>
+  <pre>09:30   clean code &amp; the developer loop
+11:30   git as your AI safety net
+
+13:45   <span class="hl">MOCK ASSESSMENT</span>   90 min, graded
+15:30   <span class="hl">VIVA</span>               random, 30 marks</pre>
+  <p class="dim">100 marks total. Thirty of them are for explaining it.</p>
+</div>
+
+<div class="slide">
+  <div class="kicker">Not style rules — three things</div>
+  <h2>What readable actually means</h2>
+  <ol>
+    <li><b>Names say <i>what</i>, not <i>how</i>.</b>
+        <code>s</code> → <code>student</code>, <code>tmp2</code> → <code>eligible</code></li>
+    <li><b>One function, one job.</b> If the name needs "and", split it.</li>
+    <li><b>Comments say <i>why</i>.</b> A comment restating the line below is noise.</li>
+  </ol>
+  <p class="warn">Half the bugs on Day 1 were only hard to find because the
+     code was unclear.</p>
+  <p class="big">Clean code isn't decoration. It's bug prevention.</p>
+</div>
+
+<div class="slide">
+  <div class="kicker">The loop</div>
+  <h2>Write → Test → Refactor → Verify</h2>
+  <pre>   WRITE  -->  TEST  -->  REFACTOR WITH AI  -->  VERIFY
+                              ^                     |
+                              +------ commit -------+</pre>
+  <p class="big warn">Refactor only when tests are green.</p>
+  <p class="dim">Otherwise you cannot tell whether AI broke it,
+     or it was already broken.</p>
+</div>
+
+<div class="slide">
+  <div class="kicker">Invariant #5 — your undo button</div>
+  <h2>Four git commands</h2>
+  <pre>git status                      <span class="dim"># what have I changed?</span>
+git add -A &amp;&amp; git commit -m "working: tests green"
+git diff                        <span class="dim"># what did the AI just do?</span>
+git reset --hard HEAD           <span class="dim"># undo everything uncommitted</span></pre>
+  <p class="big">Commit <span class="hl">before</span> you prompt.</p>
+</div>
+
+<div class="slide center">
+  <h1>Green tests don't mean<br><span class="hl">it was a good change.</span></h1>
+  <p class="big dim">An agent can bloat your code 6 lines into 40<br>
+     and every test still passes.</p>
+</div>
+
+<div class="slide">
+  <div class="kicker">Three days of your own examples</div>
+  <h2>The AI trap list</h2>
+  <table>
+    <tr><th>Trap</th><th>Looks like</th></tr>
+    <tr><td>Bloat</td><td>40 lines where 6 would do</td></tr>
+    <tr><td>Invented APIs</td><td>a method that doesn't exist</td></tr>
+    <tr><td>Wrong defaults</td><td><code>.get(k, 0)</code> when <code>None</code> was meant</td></tr>
+    <tr><td>Over-abstraction</td><td>a class hierarchy for one function</td></tr>
+    <tr><td>Confident wrongness</td><td>a docstring that contradicts the code</td></tr>
+    <tr><td>Scope creep</td><td>you asked for a fix, it rewrote the file</td></tr>
+  </table>
+</div>
+
+<div class="slide">
+  <div class="kicker">13:45 — 90 minutes, graded</div>
+  <h2>Mock assessment</h2>
+  <p><b>Part A</b> — fix 2 bugs in <code>day3/mock/drive.py</code> · 30 min</p>
+  <p><b>Part B</b> — build <code>generate_drive_report()</code> · 45 min</p>
+  <p><b>Part C</b> — commit your work · 15 min</p>
+  <p class="big warn">There are hidden tests you cannot see.</p>
+  <p class="big">Re-read the brief. <span class="hl">Every rule in it is tested.</span></p>
+</div>
+
+<div class="slide">
+  <div class="kicker">Mock assessment</div>
+  <h2>How 100 marks split</h2>
+  <table>
+    <tr><td>Part A — both bugs fixed, minimally</td><td class="num">15</td></tr>
+    <tr><td>Part B — visible tests</td><td class="num">20</td></tr>
+    <tr><td>Part B — <b>hidden tests</b></td><td class="num">20</td></tr>
+    <tr><td>Clean code</td><td class="num">10</td></tr>
+    <tr><td>Git hygiene</td><td class="num">5</td></tr>
+    <tr><td><b>Viva — explaining your code</b></td><td class="num">30</td></tr>
+  </table>
+  <p class="dim">In a real interview, the viva is closer to 100%.</p>
+</div>
+
+<div class="slide">
+  <div class="kicker">15:30 — viva</div>
+  <h2>Be honest about AI</h2>
+  <div class="grid">
+    <div class="card ok"><h3>✓ Scores higher</h3>
+      <p>"The AI wrote this line and I don't fully understand it."</p>
+    </div>
+    <div class="card no"><h3>✕ Scores zero</h3>
+      <p>A confident bluff that falls apart on one follow-up question.</p>
+    </div>
+  </div>
+  <p class="big">Honesty is <span class="hl">marked up</span>, not down.</p>
+  <p class="dim">You're building the habit that keeps you employed.</p>
+</div>
+
+<div class="slide">
+  <div class="kicker">What you'll be asked</div>
+  <h2>Viva questions</h2>
+  <ul>
+    <li>Walk me through this function, line by line.</li>
+    <li>What's the time complexity? Point at the line that dominates.</li>
+    <li>What happens with an empty list? Show me.</li>
+    <li>A student exactly on the CGPA bar — eligible? Where's that decided?</li>
+    <li>Which parts did AI write? What did you change, and why?</li>
+    <li>What would you have done with no AI today?</li>
+  </ul>
+</div>
+
+<div class="slide center">
+  <div class="kicker">Three days</div>
+  <h1>Find it. Explain it.<br><span class="hl">Defend it.</span></h1>
+  <p class="big">With or without AI.</p>
+  <p class="quote">The tools will all be different in a year.<br>
+     The method won't.</p>
+</div>
+
+<div id="bar"></div><div id="num"></div>
+<div id="hint">← → or space · F fullscreen</div>
+
+<script>
+  const slides = [...document.querySelectorAll('.slide')];
+  let i = 0;
+  function show(n){
+    i = Math.max(0, Math.min(slides.length - 1, n));
+    slides.forEach((s, k) => s.classList.toggle('on', k === i));
+    document.getElementById('bar').style.width =
+      ((i + 1) / slides.length * 100) + '%';
+    document.getElementById('num').textContent = (i + 1) + ' / ' + slides.length;
+    location.hash = i + 1;
+  }
+  addEventListener('keydown', e => {
+    if (['ArrowRight',' ','PageDown','ArrowDown'].includes(e.key)){ show(i+1); e.preventDefault(); }
+    else if (['ArrowLeft','PageUp','ArrowUp'].includes(e.key)){ show(i-1); e.preventDefault(); }
+    else if (e.key === 'Home') show(0);
+    else if (e.key === 'End') show(slides.length - 1);
+    else if (e.key.toLowerCase() === 'f') document.documentElement.requestFullscreen?.();
+  });
+  addEventListener('click', e => { if (!e.target.closest('pre,table')) show(i+1); });
+  show(parseInt(location.hash.slice(1)) - 1 || 0);
+</script>
+</body>
+</html>
