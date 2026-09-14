@@ -1,0 +1,259 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Day 1 — UNDERSTAND</title>
+<style>
+  :root{
+    --bg:#0f1115; --fg:#f2f4f8; --dim:#98a2b3; --accent:#4ade80;
+    --warn:#fbbf24; --bad:#f87171; --panel:#1a1d24; --line:#2a2f3a;
+    --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{margin:0;background:var(--bg);color:var(--fg);
+       font:400 16px/1.55 system-ui,-apple-system,Segoe UI,sans-serif;
+       overflow:hidden}
+  .slide{position:absolute;inset:0;display:none;flex-direction:column;
+         justify-content:center;padding:5vh 7vw;animation:in .18s ease-out}
+  .slide.on{display:flex}
+  @keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+  h1{font-size:clamp(2.2rem,6.5vw,5rem);line-height:1.05;margin:0 0 .4em;
+     letter-spacing:-.02em}
+  h2{font-size:clamp(1.5rem,3.6vw,2.9rem);line-height:1.15;margin:0 0 .7em;
+     letter-spacing:-.015em}
+  p,li{font-size:clamp(1rem,1.9vw,1.6rem);margin:.45em 0}
+  ul,ol{padding-left:1.3em;margin:.3em 0}
+  .kicker{color:var(--accent);font:700 clamp(.8rem,1.3vw,1.1rem)/1 var(--mono);
+          letter-spacing:.18em;text-transform:uppercase;margin-bottom:1.4em}
+  .dim{color:var(--dim)}
+  .big{font-size:clamp(1.4rem,3vw,2.6rem);font-weight:700;line-height:1.3}
+  pre{font-family:var(--mono);background:var(--panel);border:1px solid var(--line);
+      border-left:4px solid var(--accent);border-radius:10px;
+      padding:clamp(.8rem,2vw,1.6rem);font-size:clamp(.78rem,1.55vw,1.35rem);
+      line-height:1.6;overflow-x:auto;margin:.7em 0}
+  code{font-family:var(--mono);background:var(--panel);padding:.12em .4em;
+       border-radius:5px;font-size:.92em}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(.8rem,2.4vw,2.4rem)}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:12px;
+        padding:clamp(.9rem,2vw,1.6rem)}
+  .card h3{margin:0 0 .5em;font-size:clamp(1rem,1.9vw,1.6rem)}
+  .ok{border-top:4px solid var(--accent)} .no{border-top:4px solid var(--bad)}
+  .ok h3{color:var(--accent)} .no h3{color:var(--bad)}
+  table{border-collapse:collapse;width:100%;font-size:clamp(.82rem,1.6vw,1.35rem)}
+  th,td{text-align:left;padding:.5em .7em;border-bottom:1px solid var(--line)}
+  th{color:var(--dim);font:600 .85em/1 var(--mono);text-transform:uppercase;
+     letter-spacing:.1em}
+  .num{color:var(--accent);font-family:var(--mono);font-weight:700}
+  .hl{color:var(--accent);font-weight:700}
+  .warn{color:var(--warn);font-weight:700}
+  .center{text-align:center;align-items:center}
+  .quote{font-size:clamp(1.2rem,2.8vw,2.4rem);line-height:1.35;font-weight:600;
+         border-left:5px solid var(--accent);padding-left:.8em;margin:.4em 0}
+  #bar{position:fixed;left:0;bottom:0;height:3px;background:var(--accent);
+       transition:width .18s;z-index:10}
+  #num{position:fixed;right:1.4vw;bottom:1.4vh;color:var(--dim);
+       font:600 .85rem/1 var(--mono);z-index:10}
+  #hint{position:fixed;left:1.4vw;bottom:1.4vh;color:var(--dim);
+        font:400 .75rem/1 var(--mono);z-index:10;opacity:.6}
+  @media(max-width:700px){.grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<div class="slide on center">
+  <div class="kicker">Day 1 of 3</div>
+  <h1>UNDERSTAND</h1>
+  <p class="big dim">Debugging &amp; reading code</p>
+  <p class="dim">AI-Enabled Coding &amp; Debugging for Placement</p>
+</div>
+
+<div class="slide">
+  <div class="kicker">First 10 minutes</div>
+  <h2>Get set up</h2>
+  <pre>git clone &lt;URL on the board&gt;
+cd nitte-ai-coding-workshop
+python3 check_setup.py
+python3 run_tests.py</pre>
+  <p class="big">Expect: <span class="hl">10 passing, 10 failing</span></p>
+  <p class="dim">No git? Green <b>Code</b> button → Download ZIP.<br>
+     Stuck 3 minutes? Hand up — pair with your neighbour.</p>
+</div>
+
+<div class="slide center">
+  <h1 class="hl">The failures<br>are the workshop.</h1>
+</div>
+
+<div class="slide">
+  <div class="kicker">Why today has no AI until 1:45</div>
+  <h2>Most placement tests ban AI</h2>
+  <p class="quote">Today you learn to do it without.<br>
+     Tomorrow you learn to do it with.</p>
+  <p>The people who get placed can do <span class="hl">both</span>.</p>
+  <p class="dim">And the tell — in every interview — is whether you can explain
+     your own fix.</p>
+</div>
+
+<div class="slide">
+  <div class="kicker">The one thing to remember</div>
+  <h2>The debugging loop</h2>
+  <pre><span class="num">1.</span> REPRODUCE     make it fail on demand
+<span class="num">2.</span> HYPOTHESISE   write it down   <span class="warn">← ON PAPER</span>
+<span class="num">3.</span> ISOLATE       prove which line
+<span class="num">4.</span> FIX           smallest possible change
+<span class="num">5.</span> VERIFY        green, nothing else broken</pre>
+  <p class="big">AI is allowed from step 3. <span class="warn">Not before.</span></p>
+</div>
+
+<div class="slide">
+  <div class="kicker">Step 2 is the whole workshop</div>
+  <h2>Why write it down first?</h2>
+  <p>If you prompt before you think, you get a <span class="hl">confident answer
+     to the wrong question</span>.</p>
+  <p>And when the interviewer asks <i>"why does this work?"</i> — you have
+     nothing.</p>
+  <p class="dim">A hypothesis takes 30 seconds. It is the difference between
+     debugging and guessing.</p>
+</div>
+
+<div class="slide">
+  <div class="kicker">11:30</div>
+  <h2>Read tracebacks bottom-up</h2>
+  <pre>Traceback (most recent call last):
+  File "run_tests.py", line 42        <span class="dim">← 3. how you got here</span>
+  File "bug_02.py", line 12           <span class="warn">← 2. WHERE</span>
+    return total / len(cgpa)
+TypeError: object of type 'float' has no len()
+<span class="hl">← 1. WHAT — START HERE</span></pre>
+  <p>Last line = <b>what</b>. Line above = <b>where</b>. Rest = <b>how</b>.</p>
+</div>
+
+<div class="slide">
+  <div class="kicker">Decode the common ones</div>
+  <h2>What the error actually means</h2>
+  <table>
+    <tr><th>Error</th><th>Plain English</th><th>Look for</th></tr>
+    <tr><td><code>SyntaxError</code></td><td>Couldn't even read your file</td><td>Missing <code>:</code> <code>)</code> <code>"</code></td></tr>
+    <tr><td><code>NameError</code></td><td>No such name exists</td><td>Typo; used before defined</td></tr>
+    <tr><td><code>TypeError</code></td><td>Wrong kind of thing</td><td><code>str + int</code>, <code>len()</code> of a number</td></tr>
+    <tr><td><code>AttributeError</code></td><td>No such <code>.thing</code></td><td>It's probably <code>None</code></td></tr>
+    <tr><td><code>IndexError</code></td><td>Past the end of the list</td><td>Off-by-one</td></tr>
+    <tr><td><code>KeyError</code></td><td>No such dict key</td><td><code>.get()</code> — mind the default</td></tr>
+  </table>
+</div>
+
+<div class="slide">
+  <div class="kicker">Three tools, that's all</div>
+  <h2>Print debugging</h2>
+  <pre>print(f"{cgpa=}")     <span class="dim"># cgpa=7.3     name AND value</span>
+print(repr(cgpa))     <span class="dim"># 7.300000000000001   the TRUTH</span>
+breakpoint()          <span class="dim"># stops here.  n / c / q</span></pre>
+  <p class="big"><code>repr()</code> finds bugs that <code>print()</code> hides.</p>
+  <p class="dim"><code>print(7.300000000000001)</code> shows you <code>7.3</code>.
+     It is lying to you to be helpful.</p>
+</div>
+
+<div class="slide center">
+  <h1>No traceback<br><span class="hl">≠ no bug</span></h1>
+  <p class="big dim">The worst bugs don't crash.<br>
+     They quietly give the wrong answer.</p>
+</div>
+
+<div class="slide">
+  <div class="kicker">What breaks code in assessments</div>
+  <h2>Always ask: what input breaks this?</h2>
+  <ul>
+    <li>empty list <code>[]</code></li>
+    <li><span class="hl">exactly on the boundary</span> — is 7.0 "7.0 or above"?</li>
+    <li>one element</li>
+    <li>duplicates</li>
+    <li>negative numbers, zero</li>
+  </ul>
+  <p class="warn">Boundary &amp; off-by-one errors are the #1 cause of hidden
+     test failures.</p>
+</div>
+
+<div class="slide center">
+  <h1>A green test proves<br>the test passed.</h1>
+  <p class="big dim">Not that your code is right.</p>
+</div>
+
+<div class="slide">
+  <div class="kicker">13:45 — first AI contact</div>
+  <h2>AI is a tutor, not a mechanic</h2>
+  <div class="grid">
+    <div class="card ok"><h3>✓ Allowed</h3>
+      <p>"explain this traceback"</p>
+      <p>"what does this line do"</p>
+      <p>"what does this error mean"</p>
+      <p>"give me 3 edge cases"</p>
+    </div>
+    <div class="card no"><h3>✕ Banned</h3>
+      <p>"fix it"</p>
+      <p>"write this for me"</p>
+      <p>"solve this problem"</p>
+    </div>
+  </div>
+  <p class="dim">Any free AI in a browser. Your phone is fine. Nothing to install.</p>
+</div>
+
+<div class="slide">
+  <div class="kicker">15:30 — the practical</div>
+  <h2>How you're scored</h2>
+  <table>
+    <tr><td>Tests green</td><td class="num">4</td></tr>
+    <tr><td><b>Hypothesis was correct</b></td><td class="num">3</td></tr>
+    <tr><td><b>Fix was minimal</b> (no rewrites)</td><td class="num">2</td></tr>
+    <tr><td>Explained it out loud</td><td class="num">1</td></tr>
+  </table>
+  <p class="big warn">You can score 6/10 without fixing anything.</p>
+  <p class="dim">Interviewers hire the reasoning, not the keystrokes.</p>
+</div>
+
+<div class="slide">
+  <div class="kicker">Tonight — 5 minutes, do it now</div>
+  <h2>Get your free API key</h2>
+  <pre>https://aistudio.google.com/apikey</pre>
+  <p>Sign in with any Google account → <b>Create API key</b> → Copy</p>
+  <pre><span class="dim">Mac/Linux</span>  echo 'export GEMINI_API_KEY="KEY"' &gt;&gt; ~/.zshrc
+<span class="dim">Windows</span>    setx GEMINI_API_KEY "KEY"    (reopen terminal)
+<span class="dim">Check</span>      echo $GEMINI_API_KEY</pre>
+  <p class="warn">Free. No card. Day 2 does not work without it.</p>
+  <p class="dim">Full steps + troubleshooting: <code>harnesses/GET-YOUR-KEY.md</code></p>
+</div>
+
+<div class="slide center">
+  <div class="kicker">Tomorrow</div>
+  <h1>DELEGATE</h1>
+  <p class="big">Same skill. AI in the loop.</p>
+  <p class="quote">The hypothesis rule doesn't go away.<br>
+     It's the only thing that makes AI safe.</p>
+</div>
+
+<div id="bar"></div><div id="num"></div>
+<div id="hint">← → or space · F fullscreen</div>
+
+<script>
+  const slides = [...document.querySelectorAll('.slide')];
+  let i = 0;
+  function show(n){
+    i = Math.max(0, Math.min(slides.length - 1, n));
+    slides.forEach((s, k) => s.classList.toggle('on', k === i));
+    document.getElementById('bar').style.width =
+      ((i + 1) / slides.length * 100) + '%';
+    document.getElementById('num').textContent = (i + 1) + ' / ' + slides.length;
+    location.hash = i + 1;
+  }
+  addEventListener('keydown', e => {
+    if (['ArrowRight',' ','PageDown','ArrowDown'].includes(e.key)){ show(i+1); e.preventDefault(); }
+    else if (['ArrowLeft','PageUp','ArrowUp'].includes(e.key)){ show(i-1); e.preventDefault(); }
+    else if (e.key === 'Home') show(0);
+    else if (e.key === 'End') show(slides.length - 1);
+    else if (e.key.toLowerCase() === 'f') document.documentElement.requestFullscreen?.();
+  });
+  addEventListener('click', e => { if (!e.target.closest('pre,table')) show(i+1); });
+  show(parseInt(location.hash.slice(1)) - 1 || 0);
+</script>
+</body>
+</html>
