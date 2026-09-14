@@ -33,7 +33,7 @@ confident answer to the wrong question, and you won't be able to defend it.
 | [day3/mock/](day3/mock/) | The timed mock assessment + brief |
 | [handouts/](handouts/) | Traceback anatomy, prompt templates, AI traps, hypothesis sheet |
 | [harnesses/](harnesses/) | The zero-cost AI tool lab and rotation scorecard |
-| [slides/](slides/) | One HTML deck per day — open in any browser, works offline |
+| [slides/](slides/) | 12 decks — one per 90-min session, 211 slides. Open `slides/index.html`. Works offline. |
 | [AGENTS.md](AGENTS.md) | Rules for any AI agent in this repo (invariant #1) |
 | [run_tests.py](run_tests.py) | Tiny stdlib test runner. No pytest needed. |
 

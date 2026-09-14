@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Day 1 S3 — AI as Explainer</title>
+<link rel="stylesheet" href="deck.css">
+</head>
+<body>
+<div class="slide on"><div class="kicker">Day 1 · Session 3 · 13:45–15:15</div>
+    <h1>AI as explainer</h1>
+    <p class="big dim">First contact — with rules</p></div>
+<div class="slide"><h2>Nothing to install</h2>
+    <p class="big">Any free AI in a browser. <span class="hl">Your phone is fine.</span></p>
+    <p class="dim">ChatGPT · Gemini · Claude — free tiers all work.
+    No account juggling, no keys, no setup. That comes tomorrow.</p></div>
+<div class="slide"><h2>The rules for today</h2>
+    <div class="grid">
+    <div class="card ok"><h3>✓ Allowed</h3>
+    <p>"explain this traceback"</p><p>"what does this line do"</p>
+    <p>"what does this error mean"</p><p>"give me 3 edge cases"</p></div>
+    <div class="card no"><h3>✕ Banned</h3>
+    <p>"fix it"</p><p>"write this for me"</p><p>"solve this problem"</p></div>
+    </div>
+    <p class="big">AI is a <span class="hl">tutor</span> today,
+    not a mechanic.</p></div>
+<div class="slide"><div class="center"><h1>Why ban "fix it"?</h1>
+    <p class="big">Because you'd learn nothing,<br>
+    and tomorrow you'd trust it blindly.</p>
+    <p class="quote">You cannot review code<br>you never understood.</p></div></div>
+<div class="slide"><h2>AI is a genuinely great tutor</h2>
+    <ul><li>Infinitely patient. Ask the same thing five times.</li>
+    <li>Never makes you feel stupid for asking.</li>
+    <li>Explains the <b>general concept</b> very well.</li>
+    <li>Available at 2am the night before your test.</li></ul>
+    <p class="big hl">Use it for this. It's genuinely better than most textbooks.</p></div>
+<div class="slide"><h2>And a poor mechanic</h2>
+    <ul><li>Confidently wrong about <b>your specific code</b></li>
+    <li>Invents functions that don't exist</li>
+    <li>Rewrites 40 lines when 1 character was wrong</li>
+    <li>Agrees with you when you're wrong</li></ul>
+    <p class="big warn">It has never seen your codebase. It's guessing —
+    very fluently.</p></div>
+<div class="slide"><h2>The prompt that teaches you something</h2>
+    <pre class="info">Here is a Python traceback:
+
+&lt;paste the WHOLE traceback&gt;
+
+And here is the function it points at:
+
+&lt;paste the function&gt;
+
+Explain what this error means and what usually
+causes it. <span class="hl">Do NOT fix it</span> — I want to find the bug myself.</pre>
+    <p class="big">That last line is what makes it teaching.</p></div>
+<div class="slide"><h2>The prompt that finds edge cases</h2>
+    <pre class="info">Explain what this function does, step by step.
+
+&lt;paste the function&gt;
+
+Then tell me: <span class="hl">what input would make it
+behave unexpectedly?</span></pre>
+    <p class="big">The second question is where the value is.</p>
+    <p class="dim">This is how you generate your own hidden tests.</p></div>
+<div class="slide"><div class="center"><div class="kicker">Drill · 30 minutes</div>
+    <h1>Explain a bug<br>you already fixed</h1>
+    <p class="big">Take a bug from this morning. Ask AI to explain
+    the <b>original</b> error.</p>
+    <p class="warn">Compare it against what you actually found.</p></div></div>
+<div class="slide"><h2>What to watch for</h2>
+    <div class="ask">Did the AI describe the <b>bug class</b> correctly
+    but get <b>your specific line</b> wrong?</div>
+    <p>That gap is the most important thing you'll notice today.</p>
+    <ul><li>General concept → usually excellent</li>
+    <li>Your actual code → often generic, sometimes wrong</li></ul>
+    <p class="big warn">Tomorrow you'll be trusting it with real code.
+    Remember this feeling.</p></div>
+<div class="slide"><div class="kicker">Drill · 30 minutes</div>
+    <h2>Context changes everything</h2>
+    <p>Ask about <code>bug_04</code> <b>twice</b>:</p>
+    <ol><li>Paste <b>only</b> the function. Ask what's wrong.</li>
+    <li>Now paste the function <b>and the failing test</b>. Ask again.</li></ol>
+    <p class="big">Night and day.</p>
+    <p class="dim">You just discovered invariant #1. It gets a name tomorrow.</p></div>
+<div class="slide"><div class="center"><h1>AI is only as good<br>as the context you give it.</h1>
+    <p class="big dim">Same model. Same question.<br>
+    Completely different answer.</p></div></div>
+<div class="slide"><h2>Prompts that get you in trouble</h2>
+    <table><tr><th>Don't say</th><th>Because</th></tr>
+    <tr><td>"fix this"</td><td>You get a rewrite and learn nothing</td></tr>
+    <tr><td>"make it better"</td><td>"Better" is undefined — you get bloat</td></tr>
+    <tr><td>"is this correct?"</td><td>It will usually just agree with you</td></tr>
+    <tr><td>"optimise this"</td><td>Cleverness you can't explain in a viva</td></tr>
+    <tr><td>"write a function to process students"</td><td>Vague in, invented out</td></tr></table></div>
+<div class="slide"><div class="kicker">Group · 20 minutes</div>
+    <h2>Where did it help? Where did it mislead?</h2>
+    <p class="big">Real examples from the room. We're writing these
+    on the board.</p>
+    <p class="dim">Keep them. We reuse this list tomorrow when we take
+    apart AI-written code that looks perfect.</p></div>
+<div class="slide"><div class="kicker">Session 3 close</div><h2>The rule that carries forward</h2>
+    <p class="quote">Hypothesis first.<br>Then ask.</p>
+    <p>You now know what AI is good at (explaining) and
+    what it's poor at (your specific code).</p>
+    <p class="big">Next session is graded.
+    <span class="warn">And your hypothesis is worth more than your fix.</span></p></div>
+<div id="bar"></div><div id="num"></div>
+<div id="deck">DAY 1 · S3</div>
+<div id="hint">← → or space · F fullscreen</div>
+<script src="deck.js"></script>
+</body>
+</html>

@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Day 3 S4 — Code Defense & Viva</title>
+<link rel="stylesheet" href="deck.css">
+</head>
+<body>
+<div class="slide on"><div class="kicker">Day 3 · Session 4 · 15:30–17:00</div>
+    <h1>Code defense</h1><p class="big dim">The viva · 30 marks</p></div>
+<div class="slide"><h2>Format</h2>
+    <ul><li><b>5 minutes each.</b> Called at <b>random</b>.</li>
+    <li>I pick one function. You walk me through it, line by line.</li>
+    <li>Then 2–3 questions.</li></ul>
+    <p class="dim">Not everyone will be called. Everyone should be ready —
+    that's why it's random.</p></div>
+<div class="slide"><h2>How 30 marks split</h2>
+    <table>
+    <tr><td><b>Line-by-line walkthrough</b></td><td class="num">10</td></tr>
+    <tr><td>Complexity</td><td class="num">5</td></tr>
+    <tr><td>Edge cases</td><td class="num">5</td></tr>
+    <tr><td>Design justification</td><td class="num">5</td></tr>
+    <tr><td><b>Honesty about AI use</b></td><td class="num">5</td></tr>
+    </table></div>
+<div class="slide"><div class="center"><h1>Honesty is marked<br><span class="hl">UP.</span></h1>
+    <div class="grid" style="margin-top:1.5em">
+    <div class="card ok"><h3>✓ Scores higher</h3>
+    <p>"The AI wrote this line and I don't fully understand it."</p></div>
+    <div class="card no"><h3>✕ Scores zero</h3>
+    <p>A confident bluff that collapses on one follow-up.</p></div>
+    </div></div></div>
+<div class="slide"><h2>Why honesty scores</h2>
+    <p>I'm not testing whether you used AI. <b>Everyone used AI.</b></p>
+    <p class="big">I'm testing whether you <span class="hl">know what you
+    don't know</span>.</p>
+    <p class="dim">An engineer who flags uncertainty is safe to hire.
+    One who bluffs ships bugs into production and can't explain them.</p></div>
+<div class="slide"><h2>The strike rule</h2>
+    <p class="quote">Any line you cannot explain is struck from your
+    submission — and scores zero in Parts A and B, even if the tests pass.</p>
+    <p class="big warn">This is the rule that makes the other 70 marks real.</p></div>
+<div class="slide"><h2>Walkthrough questions</h2>
+    <ul><li>Walk me through this function, line by line.</li>
+    <li>Why a <code>list</code> here and not a <code>dict</code>?</li>
+    <li>What happens on the <b>first</b> iteration of that loop?</li>
+    <li>What's the value of <code>reason</code> when the student
+    <b>is</b> eligible?</li></ul></div>
+<div class="slide"><h2>Complexity questions</h2>
+    <ul><li>What's the time complexity? <b>Point at the line that dominates.</b></li>
+    <li>You sort inside the function — what does that cost?</li>
+    <li>5000 students instead of 5. What breaks first?</li>
+    <li>Could you do this in one pass? Would you <b>want</b> to?</li></ul>
+    <p class="dim">You met an O(n²) that timed out on Day 1. Same idea.</p></div>
+<div class="slide"><h2>Answering a complexity question</h2>
+    <pre class="bad">"It's O(n)."</pre>
+    <p class="dim">Fine. Forgettable.</p>
+    <pre>"O(n log n) — the loop over students is O(n), but the
+ sort dominates at O(n log n). Space is O(n) because
+ I build a new list rather than modify the input."</pre>
+    <p class="big">Point at the line. <span class="hl">Always point at the line.</span></p></div>
+<div class="slide"><h2>Edge case questions</h2>
+    <ul><li>What happens with an empty list? <b>Show me.</b></li>
+    <li>A student exactly on the CGPA bar — eligible? Where's that decided?</li>
+    <li>Two students, identical CGPA and backlogs. What decides the order?</li>
+    <li>What if <code>allowed_branches</code> is empty?</li></ul>
+    <p class="warn">"I didn't handle that" is an acceptable answer.
+    "I didn't think about it" is not.</p></div>
+<div class="slide"><h2>AI questions — everyone gets one</h2>
+    <ul><li>Which parts did AI write? Which did you change?</li>
+    <li>Did it suggest anything you <b>rejected</b>? Why?</li>
+    <li>How did you check it was right?</li>
+    <li>What would you have done with <b>no AI</b> today?</li></ul>
+    <p class="big hl">Question 2 is the one that impresses.</p></div>
+<div class="slide"><div class="center"><h1>"I rejected its first answer<br>because it mutated the input list."</h1>
+    <p class="big hl">That single sentence is a job offer.</p>
+    <p class="big dim">It proves you reviewed, understood,<br>
+    and had the judgement to say no.</p></div></div>
+<div class="slide"><h2>Watching counts too</h2>
+    <p>Most of you won't be called. <b>Watch anyway.</b></p>
+    <p class="big">You'll learn nearly as much from 14 vivas
+    as from giving one.</p>
+    <p class="dim">Note the answers that landed. Note the ones that
+    fell apart. That's your interview prep, free.</p></div>
+<div class="slide"><div class="kicker">Debrief</div><h2>The best answers we heard</h2>
+    <p class="big">And why they worked.</p></div>
+<div class="slide"><h2>Three days</h2>
+    <table><tr><th>Day 1</th><th>Day 2</th><th>Day 3</th></tr>
+    <tr><td>Find it</td><td>Delegate it</td><td>Defend it</td></tr>
+    <tr><td>The loop</td><td>The invariants</td><td>The viva</td></tr>
+    <tr><td>Hypothesis first</td><td>Review the diff</td><td>Explain every line</td></tr>
+    </table>
+    <p class="big">One method, three settings.</p></div>
+<div class="slide"><div class="center"><h1>Find it. Explain it.<br><span class="hl">Defend it.</span></h1>
+    <p class="big">With or without AI.</p>
+    <p class="quote">The tools will all be different in a year.<br>
+    The method won't.</p></div></div>
+<div class="slide"><div class="center"><h1 class="hl">Good luck<br>with your placements.</h1>
+    <p class="big dim">Everything from these three days<br>
+    stays in the repo. Keep using it.</p></div></div>
+<div id="bar"></div><div id="num"></div>
+<div id="deck">DAY 3 · S4</div>
+<div id="hint">← → or space · F fullscreen</div>
+<script src="deck.js"></script>
+</body>
+</html>

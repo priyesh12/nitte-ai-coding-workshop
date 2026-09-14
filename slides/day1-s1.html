@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Day 1 S1 — Code Execution & Common Bugs</title>
+<link rel="stylesheet" href="deck.css">
+</head>
+<body>
+<div class="slide on"><div class="kicker">Day 1 · Session 1 · 09:30–11:00</div>
+    <h1>UNDERSTAND</h1><p class="big dim">Code execution &amp; common bugs</p>
+    <p class="dim">AI-Enabled Coding &amp; Debugging for Placement</p></div>
+<div class="slide"><h2>Get set up — 10 minutes</h2>
+    <pre>git clone &lt;URL on the board&gt;
+cd nitte-ai-coding-workshop
+python3 check_setup.py
+python3 run_tests.py bugs</pre>
+    <p class="big">Expect <span class="hl">18 passing, 16 failing</span></p>
+    <p class="dim">No git? Green <b>Code</b> button → Download ZIP.<br>
+    Stuck 3 minutes? Hand up — pair with a neighbour.</p></div>
+<div class="slide"><div class="center"><h1 class="hl">The failures<br>are the workshop.</h1></div></div>
+<div class="slide"><h2>Three days</h2>
+    <table>
+    <tr><td class="num">1</td><td><b>UNDERSTAND</b><br><span class="dim">Debug without AI. Build the reflex.</span></td></tr>
+    <tr><td class="num">2</td><td><b>DELEGATE</b><br><span class="dim">Drive any AI tool. Distrust every output.</span></td></tr>
+    <tr><td class="num">3</td><td><b>DELIVER</b><br><span class="dim">Ship it. Then defend every line.</span></td></tr>
+    </table>
+    <p class="dim">09:30–11:00 · 11:30–13:00 · 13:45–15:15 · 15:30–17:00</p></div>
+<div class="slide"><div class="kicker">Why today has no AI until 1:45</div>
+    <h2>Most placement tests ban AI</h2>
+    <p class="quote">Today you learn to do it without.<br>Tomorrow you learn to do it with.</p>
+    <p>The people who get placed can do <span class="hl">both</span>.</p>
+    <p class="dim">And in every interview, the tell is whether you can explain your own fix.</p></div>
+<div class="slide"><h2>What actually happens in a screening test</h2>
+    <ul>
+    <li>You get code that <b>almost</b> works</li>
+    <li>Some tests are <b>visible</b>. Most are <b>hidden</b>.</li>
+    <li>60–90 minutes. No internet. Often no AI.</li>
+    <li>They watch <b>how</b> you work, not just the final answer</li>
+    </ul>
+    <p class="big warn">Rewriting from scratch is the #1 way people fail.</p></div>
+<div class="slide"><h2>Three kinds of bug</h2>
+    <div class="grid3">
+    <div class="card no"><h3>Syntax</h3><p>Python can't read your file.</p>
+    <p class="dim">Nothing runs at all.</p><p class="hl">Easiest.</p></div>
+    <div class="card maybe"><h3>Runtime</h3><p>It runs, then crashes.</p>
+    <p class="dim">You get a traceback.</p><p class="warn">Medium.</p></div>
+    <div class="card ok" style="border-top-color:var(--bad)"><h3>Logic</h3>
+    <p>It runs. It finishes. It's <b>wrong</b>.</p>
+    <p class="dim">No error at all.</p><p class="bad">Hardest.</p></div>
+    </div>
+    <p class="big">Which kind do you think costs the most marks?</p></div>
+<div class="slide"><div class="kicker">Type 1</div><h2>Syntax errors</h2>
+    <pre class="bad">def greet(name, company)
+                        ^
+SyntaxError: expected ':'</pre>
+    <p>Python never even started. <b>Zero</b> of your code ran.</p>
+    <p class="dim">Missing <code>:</code> <code>)</code> <code>"</code> · wrong indentation · a stray comma</p>
+    <div class="ask">The caret points where the parser <b>gave up</b> —
+    not always where you went wrong. Always check the line <b>above</b> too.</div></div>
+<div class="slide"><div class="kicker">Type 2</div><h2>Runtime errors</h2>
+    <pre class="warn">total = 0
+for cgpa in cgpas:
+    total = total + cgpa
+return total / len(cgpa)     <span class="dim"># cgpa, not cgpas</span>
+
+TypeError: object of type 'float' has no len()</pre>
+    <p>Half your code ran, then it hit something impossible.</p>
+    <p class="hl">The error names the type. The type tells you the fix.</p></div>
+<div class="slide"><div class="kicker">Type 3 — the dangerous one</div>
+    <h2>Logic errors</h2>
+    <pre class="bad">def is_eligible(cgpa, backlogs):
+    <span class="dim"># spec: "CGPA of 7.0 or above"</span>
+    return cgpa &gt; 7.0 and backlogs &lt;= 1</pre>
+    <p>No crash. No traceback. No warning.</p>
+    <p class="big bad">Every student with exactly 7.0 is silently rejected.</p>
+    <div class="ask">How would you ever notice this?</div></div>
+<div class="slide"><div class="center"><h1>No traceback<br><span class="hl">≠ no bug</span></h1>
+    <p class="big dim">The worst bugs don't crash.<br>They quietly give the wrong answer.</p></div></div>
+<div class="slide"><div class="kicker">The one thing to remember</div>
+    <h2>The debugging loop</h2>
+    <pre><span class="num">1.</span> REPRODUCE     make it fail on demand
+<span class="num">2.</span> HYPOTHESISE   write it down   <span class="warn">← ON PAPER</span>
+<span class="num">3.</span> ISOLATE       prove which line
+<span class="num">4.</span> FIX           smallest possible change
+<span class="num">5.</span> VERIFY        green, nothing else broken</pre>
+    <p class="big">AI is allowed from step 3. <span class="warn">Not before.</span></p></div>
+<div class="slide"><h2>Step 1 — Reproduce</h2>
+    <p>If you can't make it fail <b>on demand</b>, you cannot know you fixed it.</p>
+    <pre>python3 run_tests.py bugs/tier0</pre>
+    <ul><li>What exact input causes it?</li>
+    <li>Does it fail <b>every</b> time, or sometimes?</li>
+    <li>What is the <b>smallest</b> input that still fails?</li></ul>
+    <p class="dim">Shrinking the input is half the diagnosis.</p></div>
+<div class="slide"><h2>Step 2 — Hypothesise <span class="warn">← the whole workshop</span></h2>
+    <p>One sentence, on paper, before you touch anything:</p>
+    <pre class="info">"I think line 12 divides by len(cgpa) instead of
+ len(cgpas), so it's taking len() of a float."</pre>
+    <p>If you prompt an AI before this, you get a
+    <span class="bad">confident answer to the wrong question</span>.</p>
+    <p class="big">And in the viva you'll have nothing to say.</p></div>
+<div class="slide"><h2>Steps 3–5</h2>
+    <table>
+    <tr><td class="num">3</td><td><b>Isolate</b><br>
+    <span class="dim">Prove it. A print, a breakpoint, a smaller input.
+    Don't guess — confirm.</span></td></tr>
+    <tr><td class="num">4</td><td><b>Fix</b><br>
+    <span class="dim">Smallest possible change. One character if possible.
+    Never rewrite the function.</span></td></tr>
+    <tr><td class="num">5</td><td><b>Verify</b><br>
+    <span class="dim">Tests green — <b>and</b> nothing that used to pass now fails.</span></td></tr>
+    </table></div>
+<div class="slide"><div class="center"><h1>Smallest<br>possible fix.</h1>
+    <p class="big dim">Rewriting the function hides what you learned<br>
+    and breaks three things you didn't test.</p>
+    <p class="warn">Graded on this today.</p></div></div>
+<div class="slide"><div class="kicker">How we'll work</div><h2>Bug Hunt</h2>
+    <ol><li><b>90 seconds silent.</b> No typing. Write one hypothesis.</li>
+    <li>We collect <span class="hl">three wrong answers first.</span></li>
+    <li>A student drives at the keyboard.</li>
+    <li>Reproduce → isolate → fix.</li>
+    <li><b>Post-mortem:</b> what was the smallest fix?</li></ol>
+    <p class="dim">Being wrong out loud is the point. It's the exact thing
+    that makes people freeze in interviews.</p></div>
+<div class="slide"><div class="center"><div class="kicker">Bug Hunt #1</div>
+    <h1>bug_01_greeting.py</h1>
+    <p class="big">90 seconds. Silent. Pen down on a hypothesis.</p></div></div>
+<div class="slide"><div class="kicker">Predict the output</div><h2>Drill 1</h2>
+    <pre>marks = [10, 20, 30]
+for i in range(1, len(marks)):
+    print(marks[i])</pre>
+    <div class="ask">What prints? And what did the author probably mean?</div>
+    <p class="dim">Answer: 20, 30. The first element is silently skipped —
+    <code>range(1, n)</code> starts at 1.</p></div>
+<div class="slide"><div class="kicker">Predict the output</div><h2>Drill 2</h2>
+    <pre>students = ["Asha", "Bhavya", "Chetan"]
+for s in students:
+    if s.startswith("B"):
+        students.remove(s)
+print(students)</pre>
+    <div class="ask">Three names. Remove the B one. What's left?</div>
+    <p class="dim">Answer: <code>['Asha', 'Chetan']</code> — correct here,
+    but add a second B-name and it breaks. You'll meet this in bug_04.</p></div>
+<div class="slide"><div class="kicker">Predict the output</div><h2>Drill 3</h2>
+    <pre>print(10 / 3)
+print(10 // 3)
+print(10 % 3)
+print(int(10 / 3))</pre>
+    <div class="ask">Which of these gives 3? Which gives 3.333…?</div>
+    <p class="dim">3.3333333333333335 · 3 · 1 · 3<br>
+    <code>/</code> is always float in Python 3. <b>Always.</b></p></div>
+<div class="slide"><div class="kicker">Predict the output</div><h2>Drill 4</h2>
+    <pre>cgpa = 7.0
+if cgpa &gt; 7.0:
+    print("eligible")
+else:
+    print("rejected")</pre>
+    <div class="ask">The rule is "7.0 or above". Is this right?</div>
+    <p class="big bad">Prints "rejected". One character wrong.</p></div>
+<div class="slide"><h2>Off-by-one &amp; boundaries</h2>
+    <pre>  6.8   6.9   <span class="warn">7.0</span>   7.1   7.2
+              ^
+        "7.0 or above"
+
+  cgpa &gt;  7.0    ○ open   — 7.0 EXCLUDED  <span class="bad">wrong</span>
+  cgpa &gt;= 7.0    ● closed — 7.0 included  <span class="hl">right</span></pre>
+    <p class="big warn">The #1 cause of hidden test failures.</p>
+    <p class="dim">Whenever you read "or above", "at most", "up to",
+    "at least" — stop and check the edge.</p></div>
+<div class="slide"><h2>Words that hide a boundary</h2>
+    <table><tr><th>Spec says</th><th>You need</th></tr>
+    <tr><td>"7.0 or above", "at least 7.0"</td><td><code>&gt;= 7.0</code></td></tr>
+    <tr><td>"above 7.0", "more than 7.0"</td><td><code>&gt; 7.0</code></td></tr>
+    <tr><td>"at most 1 backlog", "up to 1"</td><td><code>&lt;= 1</code></td></tr>
+    <tr><td>"fewer than 1", "under 1"</td><td><code>&lt; 1</code></td></tr>
+    <tr><td>"top 3"</td><td class="warn">…what if there's a tie?</td></tr></table>
+    <p class="dim">That last row is a real exercise later today.</p></div>
+<div class="slide"><h2>Always ask: what input breaks this?</h2>
+    <div class="grid">
+    <div class="card"><h3>Empty</h3><p><code>[]</code> <code>""</code>
+    <code>{}</code> <code>None</code> · <code>0</code></p></div>
+    <div class="card"><h3>Boundary</h3><p>Exactly at the limit.
+    One below. One above.</p></div>
+    <div class="card"><h3>One element</h3><p>Loops and pairs
+    often break at n=1.</p></div>
+    <div class="card"><h3>Duplicates</h3><p>Two students,
+    identical CGPA. Now what?</p></div>
+    </div>
+    <p class="big">Hidden tests are made of exactly these.</p></div>
+<div class="slide"><div class="kicker">How we work today</div><h2>Pairs, rotating driver</h2>
+    <ul><li>One <b>driver</b> (types), one <b>navigator</b> (reads, thinks)</li>
+    <li><b>Swap every 10 minutes.</b> Enforced.</li>
+    <li>The navigator is not allowed to touch the keyboard</li>
+    <li>The driver is not allowed to change a line the navigator can't explain</li></ul>
+    <p class="dim">This is how real engineers debug together — and it's a
+    surprisingly common interview format.</p></div>
+<div class="slide"><div class="center"><div class="kicker">Your turn · 25 minutes</div>
+    <h1>tier0 → tier1</h1>
+    <pre>python3 run_tests.py bugs/tier0</pre>
+    <p class="big">Hypothesis on paper <span class="warn">before</span> you change anything.</p>
+    <p class="dim">Swap driver every 10 minutes.</p></div></div>
+<div class="slide"><div class="kicker">Buffer · if you're flying</div>
+    <h2>Python gotchas quiz</h2>
+    <pre>a = [1, 2, 3]
+b = a
+b.append(4)
+print(a)          <span class="dim"># ?</span>
+
+x = "5"
+print(x * 3)      <span class="dim"># ?</span>
+
+print(0.1 + 0.2 == 0.3)   <span class="dim"># ?</span></pre>
+    <p class="dim">[1,2,3,4] — <code>b</code> is the same list, not a copy<br>
+    "555" — string repetition, not arithmetic<br>
+    False — and that one costs people their placement</p></div>
+<div class="slide"><div class="kicker">Session 1 close</div><h2>What you should leave with</h2>
+    <ul><li>Three kinds of bug — and logic errors are the dangerous ones</li>
+    <li>The 5-step loop, with <b>hypothesis on paper</b> at step 2</li>
+    <li>Smallest possible fix, never a rewrite</li>
+    <li>Boundaries are where hidden tests live</li></ul>
+    <p class="big">Next: reading tracebacks properly, and the print
+    techniques that find what <code>print()</code> hides.</p></div>
+<div id="bar"></div><div id="num"></div>
+<div id="deck">DAY 1 · S1</div>
+<div id="hint">← → or space · F fullscreen</div>
+<script src="deck.js"></script>
+</body>
+</html>

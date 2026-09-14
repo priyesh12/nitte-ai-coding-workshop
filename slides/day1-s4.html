@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Day 1 S4 — Debugging Practical</title>
+<link rel="stylesheet" href="deck.css">
+</head>
+<body>
+<div class="slide on"><div class="kicker">Day 1 · Session 4 · 15:30–17:00</div>
+    <h1>The practical</h1><p class="big dim">Graded · pairs · 60 minutes</p></div>
+<div class="slide"><h2>Format</h2>
+    <ul><li><b>4 bugs</b>, ones you haven't seen</li>
+    <li><b>60 minutes</b>, in your pairs</li>
+    <li><b>Hypothesis sheet handed in</b> — your own paper</li>
+    <li>AI allowed — <span class="warn">but only after the hypothesis is written</span></li></ul></div>
+<div class="slide"><h2>Your hypothesis sheet</h2>
+    <pre>BUG # ____
+
+1. Expected:
+2. Actually got:
+3. My hypothesis:          <span class="warn">← BEFORE any AI</span>
+4. Fix (lines changed: __):
+5. Was I right?  Y / partly / N</pre>
+    <p class="dim">Fold a page in half. One bug per half-page.</p></div>
+<div class="slide"><h2>How you're scored</h2>
+    <table>
+    <tr><td>Tests green</td><td class="num">4</td></tr>
+    <tr><td><b>Hypothesis was correct</b></td><td class="num">3</td></tr>
+    <tr><td><b>Fix was minimal</b> (no rewrites)</td><td class="num">2</td></tr>
+    <tr><td>Explained it out loud</td><td class="num">1</td></tr>
+    </table>
+    <p class="big warn">You can score 6/10 without fixing anything.</p></div>
+<div class="slide"><div class="center"><h1>Interviewers hire<br>the reasoning,<br>
+    <span class="hl">not the keystrokes.</span></h1></div></div>
+<div class="slide"><h2>Why "minimal fix" is worth marks</h2>
+    <div class="grid">
+    <div class="card no"><h3>✕ Rewrote the function</h3>
+    <p>Can't say what was wrong.</p><p>Broke two things not tested.</p>
+    <p class="dim">Interviewer: "so what was the bug?" — silence.</p></div>
+    <div class="card ok"><h3>✓ Changed one character</h3>
+    <p>Knows exactly what was wrong.</p><p>Nothing else could break.</p>
+    <p class="dim">"<code>&gt;</code> should have been <code>&gt;=</code>." Hired.</p></div>
+    </div></div>
+<div class="slide"><div class="center"><div class="kicker">Start</div>
+    <h1>60 minutes</h1>
+    <pre>python3 run_tests.py bugs</pre>
+    <p class="big">Reproduce → <span class="warn">hypothesise</span> →
+    isolate → fix → verify</p></div></div>
+<div class="slide"><div class="center"><div class="kicker">30 minutes gone</div>
+    <h1>Halfway</h1>
+    <p class="big">Stuck on one? <span class="hl">Move on.</span></p>
+    <p class="dim">Come back. A fresh look beats twenty more minutes of staring.
+    That's true in the real test too.</p></div></div>
+<div class="slide"><div class="center"><div class="kicker">10 minutes left</div>
+    <h1>Finish your sheets</h1>
+    <p class="big warn">The sheet is worth more than the fix.</p>
+    <p class="dim">Question 5 especially — "was I right?"
+    An honest "no" scores.</p></div></div>
+<div class="slide"><div class="kicker">Live solve · 30 minutes</div>
+    <h2>The ones nobody got</h2>
+    <p class="big">I'll drive. I'll think out loud.</p>
+    <p class="dim">Including the parts where I don't know yet.
+    That's what debugging actually looks like.</p></div>
+<div class="slide"><h2>What we saw today</h2>
+    <table><tr><th>Bug</th><th>Class</th><th>Lesson</th></tr>
+    <tr><td>greeting</td><td>Syntax</td><td>Caret points where the parser gave up</td></tr>
+    <tr><td>average</td><td>Runtime</td><td>The type in the message is the clue</td></tr>
+    <tr><td>eligible</td><td><span class="warn">Boundary</span></td><td><code>&gt;</code> vs <code>&gt;=</code> — #1 hidden test killer</td></tr>
+    <tr><td>toppers</td><td>Logic</td><td>Never mutate what you iterate</td></tr>
+    <tr><td>register</td><td>Logic</td><td>Mutable defaults evaluate once</td></tr>
+    <tr><td>cutoff</td><td>Logic</td><td>Never <code>==</code> on floats</td></tr></table></div>
+<div class="slide"><div class="center"><h1>Every one of those<br>is a real screening test bug.</h1>
+    <p class="big dim">Not a teaching exercise.<br>
+    These are the actual failure modes.</p></div></div>
+<div class="slide"><div class="kicker">Homework · 5 minutes · do it now</div>
+    <h2>Get your free API key</h2>
+    <pre>https://aistudio.google.com/apikey</pre>
+    <p>Sign in with any Google account → <b>Create API key</b> → Copy</p>
+    <pre><span class="dim">Mac/Linux</span>  echo 'export GEMINI_API_KEY="KEY"' &gt;&gt; ~/.zshrc
+<span class="dim">Windows</span>    setx GEMINI_API_KEY "KEY"   <span class="dim">(reopen terminal)</span>
+<span class="dim">Check</span>      echo $GEMINI_API_KEY</pre>
+    <p class="warn">Free. No card. Day 2 does not work without it.</p></div>
+<div class="slide"><h2>If it doesn't work</h2>
+    <table><tr><th>Problem</th><th>Fix</th></tr>
+    <tr><td>Prints nothing</td><td>Reopen the terminal completely</td></tr>
+    <tr><td>Prints <code>$GEMINI_API_KEY</code></td><td>You're in CMD — use PowerShell</td></tr>
+    <tr><td>Asks for billing</td><td>Wrong page. Use <b>aistudio.google.com</b></td></tr>
+    <tr><td>College account blocked</td><td>Use a personal Gmail</td></tr>
+    <tr><td>Stuck 15 min</td><td>Stop. You'll pair tomorrow. Fine.</td></tr></table>
+    <p class="dim">Full steps: <code>harnesses/GET-YOUR-KEY.md</code> in your repo.</p></div>
+<div class="slide"><div class="center"><div class="kicker">Tomorrow</div>
+    <h1>DELEGATE</h1>
+    <p class="big">Same skill. AI in the loop.</p>
+    <p class="quote">The hypothesis rule doesn't go away.<br>
+    It's the only thing that makes AI safe.</p></div></div>
+<div id="bar"></div><div id="num"></div>
+<div id="deck">DAY 1 · S4</div>
+<div id="hint">← → or space · F fullscreen</div>
+<script src="deck.js"></script>
+</body>
+</html>

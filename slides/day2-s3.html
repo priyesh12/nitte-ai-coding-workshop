@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Day 2 S3 — The Sabotage Drill</title>
+<link rel="stylesheet" href="deck.css">
+</head>
+<body>
+<div class="slide on"><div class="kicker">Day 2 · Session 3 · 13:45–15:15</div>
+    <h1>The sabotage drill</h1>
+    <p class="big dim">AI wrote this. Every function has a bug.</p></div>
+<div class="slide"><div class="center"><h1>An AI wrote this code.</h1>
+    <p class="big">It is clean. It is commented. It is idiomatic.</p>
+    <p class="big warn">Every function has a bug.</p></div></div>
+<div class="slide"><h2>The rules</h2>
+    <ul><li><b>20 minutes.</b> Reading only.</li>
+    <li><span class="bad">No running the code.</span></li>
+    <li><span class="bad">No AI.</span></li>
+    <li>Write down every bug you think you've found</li></ul>
+    <pre>day2/sabotage/ai_output.py</pre>
+    <p class="dim">I'm not telling you how many there are.</p></div>
+<div class="slide"><div class="center"><div class="kicker">20 minutes · reading only</div>
+    <h1>Go.</h1></div></div>
+<div class="slide"><div class="kicker">Before we run it</div>
+    <h2>What did you find?</h2>
+    <p class="big">Hands up. Let's put them on the board.</p>
+    <p class="dim">Be specific — function name and line.</p></div>
+<div class="slide"><h2>Now run it</h2>
+    <pre>python3 run_tests.py day2/sabotage</pre>
+    <p class="big">Four functions. <span class="warn">Four bugs.</span>
+    Six failing tests.</p>
+    <div class="ask">How many did you find by reading?</div></div>
+<div class="slide"><div class="kicker">Bug 1</div><h2><code>calculate_percentage</code></h2>
+    <pre>if total_count == 0:
+    return 0.0
+return round((placed_count / total_count) * 100, 2)</pre>
+    <p>Handles zero. Rounds properly. Clean docstring.</p>
+    <pre class="bad">calculate_percentage(500, 200)   →   250.0</pre>
+    <p class="big">More students placed than exist.</p>
+    <p class="dim">Real data has typos. Returning 250% isn't
+    "handling" it — it's hiding it.</p></div>
+<div class="slide"><div class="kicker">Bug 2 — the nasty one</div>
+    <h2><code>paginate</code></h2>
+    <pre>"""Pages are 1-indexed, so page 1 returns
+   the first per_page students."""
+
+start = page * per_page</pre>
+    <p class="big bad">Page 1 starts at index 10.</p>
+    <p class="big">The docstring is a <span class="bad">lie</span>.</p>
+    <p class="dim">And the lie is exactly what made you skip reading the code.</p></div>
+<div class="slide"><div class="kicker">Bug 3</div><h2><code>get_cgpa</code></h2>
+    <pre>return float(student.get("cgpa", 0.0))</pre>
+    <p>Looks like textbook defensive programming.</p>
+    <pre class="bad">get_cgpa({})               → 0.0   ✓
+get_cgpa({"cgpa": None})   → <span class="bad">TypeError</span></pre>
+    <p class="big">The default <b>only</b> fires when the key is
+    <span class="hl">missing</span>.</p>
+    <p class="dim">A student whose CGPA isn't entered yet has
+    <code>cgpa=None</code>. The key exists. Crash.</p></div>
+<div class="slide"><div class="kicker">Bug 4</div><h2><code>merge_skill_lists</code></h2>
+    <pre>existing.extend(incoming)
+return sorted(set(existing))</pre>
+    <p>Returns the right answer. <b>And silently modifies the
+    caller's list.</b></p>
+    <pre class="bad">original = ["Python"]
+merge_skill_lists(original, ["SQL"])
+print(original)   → ['Python', 'SQL']   <span class="bad">← ?!</span></pre>
+    <p class="dim">You met this exact class of bug on Day 1.</p></div>
+<div class="slide"><h2>All four, together</h2>
+    <table><tr><th>Function</th><th>Bug</th><th>Day 1 echo</th></tr>
+    <tr><td><code>calculate_percentage</code></td><td>No validation</td><td>Edge cases</td></tr>
+    <tr><td><code>paginate</code></td><td>Off-by-one</td><td>Boundaries</td></tr>
+    <tr><td><code>get_cgpa</code></td><td>Default never fires</td><td>Wrong assumptions</td></tr>
+    <tr><td><code>merge_skill_lists</code></td><td>Mutates caller's list</td><td>Mutation bugs</td></tr></table>
+    <p class="big">Nothing new. <span class="hl">You already knew all four
+    classes.</span></p></div>
+<div class="slide"><div class="center"><h1>So why were they<br>so hard to see?</h1></div></div>
+<div class="slide"><div class="center"><h1>Beautiful code<br><span class="hl">lowers your guard.</span></h1>
+    <p class="big dim">You skim clean code.<br>You scrutinise ugly code.</p>
+    <p class="big warn">AI output is always clean.<br>
+    So your guard is always down.</p></div></div>
+<div class="slide"><h2>The six traps</h2>
+    <table><tr><th>Trap</th><th>Looks like</th></tr>
+    <tr><td>Bloat</td><td>40 lines where 6 would do</td></tr>
+    <tr><td>Invented APIs</td><td>A method that doesn't exist</td></tr>
+    <tr><td>Wrong defaults</td><td><code>.get(k, 0)</code> when <code>None</code> was meant</td></tr>
+    <tr><td>Over-abstraction</td><td>A class hierarchy for one function</td></tr>
+    <tr><td><b>Confident wrongness</b></td><td>A docstring that contradicts the code</td></tr>
+    <tr><td>Scope creep</td><td>You asked for a fix, it rewrote the file</td></tr></table>
+    <p class="dim">Full checklist: <code>handouts/ai-traps.md</code></p></div>
+<div class="slide"><h2>Which of these passes a sample test?</h2>
+    <div class="ask">All four. Every single one passes the happy path.</div>
+    <p class="big warn">This is precisely what a screening test does to you.</p>
+    <ul><li>Sample case: passes</li><li>You submit</li>
+    <li>Hidden tests: three failures</li>
+    <li>You have no idea why — you never understood the code</li></ul></div>
+<div class="slide"><div class="center"><h1>You may not submit a line<br>
+    <span class="hl">you cannot explain out loud.</span></h1>
+    <p class="big warn">Graded tomorrow. In front of the room.</p></div></div>
+<div class="slide"><div class="kicker">The flip · 25 minutes</div>
+    <h2>Ask AI for tests, not solutions</h2>
+    <pre class="info">Write edge-case tests for this function.
+<span class="hl">Do NOT change the implementation.</span>
+
+&lt;paste the function&gt;
+
+Cover: empty input, single element, boundary
+values, duplicates, and anything that breaks it.
+Plain asserts - no pytest.</pre></div>
+<div class="slide"><div class="center"><h1>Tests are cheap to verify<br>
+    and expensive to write.</h1>
+    <p class="big hl">Code is the opposite.</p>
+    <p class="big dim">This is the best trade you can make with an AI.</p></div></div>
+<div class="slide"><h2>Why this is the habit that gets you placed</h2>
+    <ul><li>You can <b>check</b> a test in 5 seconds — does it test what it says?</li>
+    <li>Checking generated <b>code</b> takes as long as writing it</li>
+    <li>Generated tests find <b>your</b> bugs too</li>
+    <li>You stay the author of the logic — so you can defend it</li></ul>
+    <p class="big">Use AI where verification is cheap.</p></div>
+<div class="slide"><h2>Session 3 close</h2>
+    <p class="quote">The problem isn't that AI writes bad code.<br>
+    It's that AI writes <b>beautiful</b> bad code.</p>
+    <p class="big">Your 60-second review, every time:
+    read every line · docstring vs code · <code>git diff</code> ·
+    run the tests · test the boundary · test empty.</p></div>
+<div id="bar"></div><div id="num"></div>
+<div id="deck">DAY 2 · S3</div>
+<div id="hint">← → or space · F fullscreen</div>
+<script src="deck.js"></script>
+</body>
+</html>

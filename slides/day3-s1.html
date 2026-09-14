@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Day 3 S1 — Clean Code & the Dev Loop</title>
+<link rel="stylesheet" href="deck.css">
+</head>
+<body>
+<div class="slide on"><div class="kicker">Day 3 · Session 1 · 09:30–11:00</div>
+    <h1>DELIVER</h1><p class="big dim">Clean code &amp; the developer loop</p></div>
+<div class="slide"><div class="center"><div class="kicker">Read this first</div>
+    <h1 class="warn">You will be called<br>at random this afternoon.</h1>
+    <p class="big">To explain your own code, line by line.</p>
+    <p class="quote">Any line you cannot explain is struck from
+    your submission — even if the tests pass.</p></div></div>
+<div class="slide"><h2>Today</h2>
+    <pre>09:30   clean code &amp; the developer loop
+11:30   git as your AI safety net
+
+13:45   <span class="hl">MOCK ASSESSMENT</span>    90 min, graded
+15:30   <span class="hl">VIVA</span>                random, 30 marks</pre>
+    <p class="dim">100 marks. Thirty of them are for explaining it.</p></div>
+<div class="slide"><h2>"Readable" isn't style rules</h2>
+    <p class="big">Three things. That's all.</p>
+    <ol><li><b>Names say <i>what</i>, not <i>how</i></b></li>
+    <li><b>One function, one job</b></li>
+    <li><b>Comments say <i>why</i></b></li></ol></div>
+<div class="slide"><div class="kicker">Rule 1</div><h2>Names</h2>
+    <pre class="bad">def f(l, x):
+    r = []
+    for i in l:
+        if i[1] &gt; x: r.append(i)
+    return r</pre>
+    <pre>def shortlist(students, min_cgpa):
+    eligible = []
+    for student in students:
+        if student.cgpa &gt;= min_cgpa:
+            eligible.append(student)
+    return eligible</pre>
+    <p class="big">Same logic. One of them has an obvious bug.</p></div>
+<div class="slide"><div class="center"><h1>Did you spot<br>the bug in the first one?</h1>
+    <p class="big"><code>i[1] &gt; x</code> should be <code>&gt;=</code></p>
+    <p class="big hl">Unreadable code hides bugs.<br>
+    That's not an opinion — you just proved it.</p></div></div>
+<div class="slide"><div class="kicker">Rule 2</div><h2>One function, one job</h2>
+    <p class="big">If the name needs the word <b>"and"</b>, split it.</p>
+    <pre class="bad">def load_and_filter_and_report(path, criteria):</pre>
+    <pre>def load_students(path): ...
+def shortlist(students, criteria): ...
+def format_report(students): ...</pre>
+    <p class="dim">Three small functions are three things you can test
+    separately — and three things you can explain separately in a viva.</p></div>
+<div class="slide"><div class="kicker">Rule 3</div><h2>Comments say WHY</h2>
+    <pre class="bad">i = i + 1    <span class="bad"># increment i</span></pre>
+    <p class="dim">Noise. The line already says that.</p>
+    <pre>    <span class="hl"># Inclusive: a student on exactly min_cgpa is eligible.</span>
+    return student.cgpa &gt;= criteria.min_cgpa</pre>
+    <p class="big">The second one would have prevented a Day 1 bug.</p></div>
+<div class="slide"><div class="center"><h1>Clean code isn't decoration.</h1>
+    <p class="big hl">It's bug prevention.</p>
+    <p class="big dim">Half the bugs on Day 1 were only hard to find<br>
+    because the code was unclear.</p></div></div>
+<div class="slide"><h2>Naming quick reference</h2>
+    <table><tr><th>Bad</th><th>Good</th><th>Why</th></tr>
+    <tr><td><code>d</code></td><td><code>students_by_branch</code></td><td>Says what's in it</td></tr>
+    <tr><td><code>tmp2</code></td><td><code>eligible</code></td><td>Says its role</td></tr>
+    <tr><td><code>flag</code></td><td><code>is_placed</code></td><td>Booleans read as questions</td></tr>
+    <tr><td><code>process()</code></td><td><code>shortlist()</code></td><td>Verbs say the action</td></tr>
+    <tr><td><code>data</code></td><td><code>raw_csv_rows</code></td><td>"data" means nothing</td></tr></table>
+    <p class="dim">Exception: <code>i</code> in a short loop is fine. Don't
+    over-correct.</p></div>
+<div class="slide"><h2>The developer loop</h2>
+    <pre>   WRITE  -->  TEST  -->  REFACTOR WITH AI  -->  VERIFY
+                              ^                     |
+                              +------ commit -------+</pre>
+    <p class="big warn">Refactor only when tests are green.</p>
+    <p class="dim">Otherwise you can't tell whether the AI broke it,
+    or it was already broken.</p></div>
+<div class="slide"><h2>Why that order matters</h2>
+    <div class="grid">
+    <div class="card no"><h3>✕ Refactor while red</h3>
+    <p>Tests fail after. Was it the AI? Was it already broken?</p>
+    <p class="bad">You cannot tell. You've lost the thread.</p></div>
+    <div class="card ok"><h3>✓ Refactor while green</h3>
+    <p>Tests fail after? <b>The refactor did it.</b></p>
+    <p class="hl">One command to undo.</p></div>
+    </div></div>
+<div class="slide"><div class="kicker">Exercise · 25 minutes</div>
+    <h2>Refactor a Day 1 fix</h2>
+    <p>Pick any tier 1–2 bug you already fixed.</p>
+    <ol><li><b>Run the tests first.</b> Confirm green.</li>
+    <li>Rename everything properly. Split anything doing two jobs.</li>
+    <li>Run the tests again. <b>Still green?</b></li></ol>
+    <p class="big warn">If they go red, you changed behaviour — not style.</p></div>
+<div class="slide"><h2>Refactoring vs rewriting</h2>
+    <table><tr><th>Refactoring</th><th>Rewriting</th></tr>
+    <tr><td>Behaviour <b>identical</b></td><td>Behaviour changes</td></tr>
+    <tr><td>Tests stay green throughout</td><td>Tests need updating</td></tr>
+    <tr><td>Small, reversible steps</td><td>Big bang</td></tr>
+    <tr><td class="hl">Safe</td><td class="bad">Where bugs come from</td></tr></table>
+    <p class="big">AI will happily rewrite when you asked it to refactor.
+    <span class="warn">Watch for that.</span></p></div>
+<div class="slide"><h2>Session 1 close</h2>
+    <ul><li>Names that say what · one job per function · comments say why</li>
+    <li>Refactor only when green</li>
+    <li>Unreadable code hides bugs — you proved it on slide 5</li></ul>
+    <p class="big">Next: the safety net that makes all of this reversible.</p></div>
+<div id="bar"></div><div id="num"></div>
+<div id="deck">DAY 3 · S1</div>
+<div id="hint">← → or space · F fullscreen</div>
+<script src="deck.js"></script>
+</body>
+</html>

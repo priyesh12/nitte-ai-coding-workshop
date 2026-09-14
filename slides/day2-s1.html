@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Day 2 S1 — The Seven Invariants</title>
+<link rel="stylesheet" href="deck.css">
+</head>
+<body>
+<div class="slide on"><div class="kicker">Day 2 · Session 1 · 09:30–11:00</div>
+    <h1>DELEGATE</h1><p class="big dim">The seven invariants</p>
+    <p class="dim">Drive any AI tool. Distrust every output.</p></div>
+<div class="slide"><h2>Key check — 5 minutes</h2>
+    <pre>echo $GEMINI_API_KEY</pre>
+    <p class="big">Hands up if that printed something.</p>
+    <p class="warn">No key? Pair up now. One key per pair is plenty —
+    and driver/navigator is better practice anyway.</p></div>
+<div class="slide"><div class="center"><h1>There are <span class="hl">150+</span><br>of these tools.</h1>
+    <p class="big dim">OpenCode · Aider · Pi · oh-my-pi · Goose · Crush<br>
+    Plandex · Codex CLI · Gemini CLI · Cline · Continue<br>
+    Cursor · Claude Code · Droid · Auggie · Warp</p></div></div>
+<div class="slide"><h2>And a whole layer above them</h2>
+    <div class="grid">
+    <div class="card"><h3>Orchestrators</h3><p>Claude Squad · vibe-kanban ·
+    cmux · Orca</p><p class="dim">Run <b>fleets</b> of agents in parallel.</p></div>
+    <div class="card"><h3>Infrastructure</h3><p>Context compression ·
+    memory stores · security guards</p><p class="dim">Plumbing under the agents.</p></div>
+    </div>
+    <p class="big warn">New ones ship every week.</p>
+    <p class="dim">Half of that list didn't exist a year ago.</p></div>
+<div class="slide"><div class="center"><h1>You cannot learn<br>150 tools.</h1>
+    <p class="big dim">And any one you memorise<br>
+    will be obsolete before your notice period ends.</p></div></div>
+<div class="slide"><div class="center"><h1>Don't memorise tools.<br>
+    <span class="hl">Learn the primitives.</span></h1>
+    <p class="big dim">All 150 are the same seven things<br>wearing different paint.</p></div></div>
+<div class="slide"><h2>The seven invariants</h2>
+    <table>
+    <tr><td class="num">1</td><td><b>Context file</b></td><td class="dim"><code>AGENTS.md</code>, <code>CLAUDE.md</code>, <code>.cursorrules</code></td></tr>
+    <tr><td class="num">2</td><td><b>Agent loop</b></td><td class="dim">prompt → plan → edit → test → repeat</td></tr>
+    <tr><td class="num">3</td><td><b>Permissions</b></td><td class="dim">what runs without asking you</td></tr>
+    <tr><td class="num">4</td><td><b>Diff review</b></td><td class="dim">the only real quality gate</td></tr>
+    <tr><td class="num">5</td><td><b>Session state</b></td><td class="dim">resume, fork — and <code>git</code> as undo</td></tr>
+    <tr><td class="num">6</td><td><b>Provider routing</b></td><td class="dim">bring your own key</td></tr>
+    <tr><td class="num">7</td><td><b>Extensions</b></td><td class="dim">MCP, custom commands, subagents</td></tr>
+    </table>
+    <p class="big">Know these, and any new tool is a 10-minute README read.</p></div>
+<div class="slide"><div class="kicker">Invariant #2</div><h2>The agent loop</h2>
+    <pre>   YOU: "add students_at_risk to reports.py"
+        ↓
+   <span class="hl">PLAN</span>     it decides which files to read
+        ↓
+   <span class="hl">READ</span>     reports.py, models.py
+        ↓
+   <span class="hl">EDIT</span>     proposes a diff
+        ↓
+   <span class="hl">TEST</span>     runs your test command
+        ↓
+   <span class="hl">ITERATE</span>  red? go back to EDIT</pre>
+    <p class="big">Every single one of the 150 is this loop.</p></div>
+<div class="slide"><div class="kicker">Invariant #3</div><h2>Permissions</h2>
+    <p>What can it do <b>without asking you?</b></p>
+    <table><tr><th>Level</th><th>Means</th></tr>
+    <tr><td>Read files</td><td class="dim">Almost always allowed</td></tr>
+    <tr><td>Edit files</td><td class="warn">Usually asks first</td></tr>
+    <tr><td>Run shell commands</td><td class="bad">Should always ask</td></tr>
+    <tr><td>"auto-approve everything"</td><td class="bad">Tempting. Don't.</td></tr></table>
+    <div class="ask">Most students never look at this setting.
+    Find it in every tool you touch today.</div></div>
+<div class="slide"><div class="kicker">Invariant #6 — why today costs nothing</div>
+    <h2>Harness ≠ model</h2>
+    <pre>   HARNESS  (on your laptop)  ---->  PROVIDER  (the model)
+
+   OpenCode                          Google AI Studio
+   Aider                             <span class="hl">ONE FREE KEY</span>
+   Gemini CLI                        no card, no trial</pre>
+    <p class="big">One free key unlocks <span class="hl">three of four stations</span>.</p></div>
+<div class="slide"><h2>Why this matters beyond today</h2>
+    <ul><li>You are <b>not locked in</b> to any company</li>
+    <li>Model too expensive? Swap the provider, keep the tool</li>
+    <li>Model gets better? Swap it, keep the tool</li>
+    <li>Company bans a vendor? Swap it, keep the tool</li></ul>
+    <p class="big hl">The harness is your habit. The model is a commodity.</p>
+    <p class="dim">That sentence is a good interview answer.</p></div>
+<div class="slide"><div class="kicker">Invariant #1 — the big one</div>
+    <h2>The context file</h2>
+    <pre><span class="dim"># AGENTS.md</span>
+1. <b>Never "fix" anything under bugs/.</b> Broken on purpose.
+2. <b>Standard library only.</b> No pip, no packages.
+4. <b>Smallest possible change.</b> Do not refactor.
+5. <b>Show the diff before applying it.</b></pre>
+    <p class="big">A tool you never configured will obey this.</p></div>
+<div class="slide"><h2>Same rules, two filenames</h2>
+    <div class="grid">
+    <div class="card"><h3><code>AGENTS.md</code></h3>
+    <p>OpenCode · Codex CLI · Pi · Amp · and most open-source tools</p></div>
+    <div class="card"><h3><code>CLAUDE.md</code></h3>
+    <p>Claude Code</p></div>
+    </div>
+    <p class="dim">Others: <code>.cursorrules</code>,
+    <code>.github/copilot-instructions.md</code></p>
+    <p class="big">Same idea everywhere. The ecosystem just hasn't
+    agreed on a filename yet.</p></div>
+<div class="slide"><div class="center"><div class="kicker">Live demo</div>
+    <h1>Watch a tool obey<br>a file you wrote.</h1>
+    <p class="big">Ask it to read a CSV.<br>
+    Watch it <span class="hl">not</span> reach for pandas.</p>
+    <p class="dim">Then we delete rule 2 and ask again.</p></div></div>
+<div class="slide"><h2>What just happened</h2>
+    <p>One markdown file changed the behaviour of a tool
+    <b>you did not configure</b>.</p>
+    <p class="big hl">That is the highest-leverage thing you'll learn today.</p>
+    <div class="ask">In a real job: your team's <code>AGENTS.md</code> encodes
+    the house style, so every engineer's AI produces consistent code.
+    That's why this matters.</div></div>
+<div class="slide"><div class="kicker">Invariant #4 — the one that saves you</div>
+    <h2>Diff review</h2>
+    <pre>git diff</pre>
+    <p class="big">The same review surface no matter <b>which</b>
+    of the 150 tools made the change.</p>
+    <p class="warn">If a tool won't show you a diff before applying,
+    that's a reason to distrust the tool.</p></div>
+<div class="slide"><div class="kicker">Invariant #5</div><h2>Session state &amp; undo</h2>
+    <table><tr><th>Tool feature</th><th>Universal version</th></tr>
+    <tr><td>"undo last edit"</td><td><code>git reset --hard HEAD</code></td></tr>
+    <tr><td>"fork this session"</td><td><code>git branch</code></td></tr>
+    <tr><td>"checkpoint"</td><td><code>git commit</code></td></tr></table>
+    <p class="big">Git works in every tool, forever.</p>
+    <p class="dim">Tomorrow's whole second session is this.</p></div>
+<div class="slide"><div class="kicker">Invariant #7</div><h2>Extensions — know the word</h2>
+    <p><b>MCP</b> — Model Context Protocol. A standard way to give an agent
+    new abilities: read a database, call an API, search your docs.</p>
+    <p><b>Custom commands</b> — your own shortcuts.</p>
+    <p><b>Subagents</b> — the agent spawning helpers for sub-tasks.</p>
+    <p class="dim">You don't need to use these today. You need to
+    <b>know the words</b> when an interviewer says them.</p></div>
+<div class="slide"><h2>Session 1 close</h2>
+    <p class="big">Seven invariants. Then a new tool is just
+    a new keyboard shortcut.</p>
+    <p class="quote">The harness is your habit.<br>The model is a commodity.</p>
+    <p class="dim">Next: four tools, one task, twenty minutes each.</p></div>
+<div id="bar"></div><div id="num"></div>
+<div id="deck">DAY 2 · S1</div>
+<div id="hint">← → or space · F fullscreen</div>
+<script src="deck.js"></script>
+</body>
+</html>

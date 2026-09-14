@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Day 3 S3 — Mock Assessment</title>
+<link rel="stylesheet" href="deck.css">
+</head>
+<body>
+<div class="slide on"><div class="kicker">Day 3 · Session 3 · 13:45–15:15</div>
+    <h1>Mock assessment</h1>
+    <p class="big dim">90 minutes · graded · any tool allowed</p></div>
+<div class="slide"><h2>The brief</h2>
+    <pre>day3/mock/BRIEF.md</pre>
+    <p class="big warn">Read the whole thing before you write anything.</p>
+    <p class="dim">In your repo. Also on screen. Read it twice —
+    the second read is where the marks are.</p></div>
+<div class="slide"><h2>Three parts</h2>
+    <table><tr><th>Part</th><th>What</th><th>Time</th></tr>
+    <tr><td class="num">A</td><td>Fix 2 bugs in <code>drive.py</code></td><td>30 min</td></tr>
+    <tr><td class="num">B</td><td>Build <code>generate_drive_report()</code></td><td>45 min</td></tr>
+    <tr><td class="num">C</td><td>Commit your work</td><td>15 min</td></tr></table>
+    <p class="dim">Part C is worth marks. Don't skip it.</p></div>
+<div class="slide"><h2>What Part B must return</h2>
+    <table><tr><th>Key</th><th>Type</th><th>Meaning</th></tr>
+    <tr><td><code>company</code></td><td>str</td><td>from criteria</td></tr>
+    <tr><td><code>eligible</code></td><td>list[str]</td><td>names, <b>best first</b></td></tr>
+    <tr><td><code>rejected</code></td><td>list[dict]</td><td><code>{name, reason}</code></td></tr>
+    <tr><td><code>eligible_count</code></td><td>int</td><td>how many</td></tr>
+    <tr><td><code>eligibility_rate</code></td><td>float</td><td>percent, 2dp</td></tr></table>
+    <p class="warn">Exactly these keys. No more, no fewer.</p></div>
+<div class="slide"><h2>The rules in the brief</h2>
+    <ul><li>"Best first" = CGPA, then fewest backlogs, then roll number</li>
+    <li><code>reason</code> is the <b>first</b> criterion they fail</li>
+    <li>Empty list → rate is <code>0.0</code>, not a crash</li>
+    <li>The input list must <b>not</b> be modified</li></ul>
+    <p class="big warn">Every one of those is tested.</p></div>
+<div class="slide"><div class="center"><h1>There are hidden tests<br>you cannot see.</h1>
+    <p class="big">Re-read the brief.</p>
+    <p class="big hl">Every rule in it is tested.</p></div></div>
+<div class="slide"><h2>How 100 marks split</h2>
+    <table>
+    <tr><td>Part A — both bugs fixed, minimally</td><td class="num">15</td></tr>
+    <tr><td>Part B — visible tests</td><td class="num">20</td></tr>
+    <tr><td>Part B — <b>hidden tests</b></td><td class="num">20</td></tr>
+    <tr><td>Clean code</td><td class="num">10</td></tr>
+    <tr><td>Git hygiene</td><td class="num">5</td></tr>
+    <tr><td><b>Viva — explaining your code</b></td><td class="num">30</td></tr>
+    </table></div>
+<div class="slide"><div class="center"><h1>30 marks for<br>explaining it.</h1>
+    <p class="big dim">That's not padding.</p>
+    <p class="big hl">In a real interview it's closer to 100%.</p></div></div>
+<div class="slide"><h2>Your strategy</h2>
+    <ol><li><b>Read the brief twice.</b> Underline every rule.</li>
+    <li>Run the tests. See what's already failing.</li>
+    <li><b>Part A first</b> — it's 15 marks and it's quick.</li>
+    <li>Commit as soon as A is green.</li>
+    <li>Part B. Reuse what's in <code>placement_tracker/</code>.</li>
+    <li>Test the edge cases yourself before you stop.</li></ol></div>
+<div class="slide"><h2>Reuse beats rewriting</h2>
+    <p><code>placement_tracker/</code> already has code you can use.</p>
+    <p class="big">Writing it again from scratch is
+    <span class="warn">wasted time and extra bugs</span>.</p>
+    <div class="ask">A real interviewer notices this. "Did you check what
+    already existed?" is a question they actually ask.</div></div>
+<div class="slide"><div class="center"><div class="kicker">Start</div>
+    <h1>90 minutes.</h1>
+    <p class="big">Any tool allowed.</p>
+    <p class="warn">You must be able to explain every line.</p></div></div>
+<div class="slide"><div class="center"><div class="kicker">30 minutes gone</div>
+    <h1>Part A should be done.</h1>
+    <p class="big">Green? <span class="hl">Commit now.</span></p></div></div>
+<div class="slide"><div class="center"><div class="kicker">40 minutes left</div>
+    <h1>Part B — start now</h1>
+    <p class="big dim">If you haven't started the feature,
+    stop fixing and start building.</p></div></div>
+<div class="slide"><div class="center"><div class="kicker">10 minutes left</div>
+    <h1 class="warn">Commit what works.</h1>
+    <p class="big">A committed partial solution beats an
+    uncommitted perfect one.</p></div></div>
+<div class="slide"><div class="center"><div class="kicker">Time</div><h1>Stop.</h1>
+    <p class="big">Hands off keyboards.</p>
+    <p class="dim">Viva in 15 minutes. Look over your own code —
+    you're about to explain it.</p></div></div>
+<div id="bar"></div><div id="num"></div>
+<div id="deck">DAY 3 · S3</div>
+<div id="hint">← → or space · F fullscreen</div>
+<script src="deck.js"></script>
+</body>
+</html>

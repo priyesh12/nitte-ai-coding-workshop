@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Day 2 S4 — Cold Start & Bake-Off</title>
+<link rel="stylesheet" href="deck.css">
+</head>
+<body>
+<div class="slide on"><div class="kicker">Day 2 · Session 4 · 15:30–17:00</div>
+    <h1>Cold start<br>&amp; bake-off</h1>
+    <p class="big dim">A tool nobody taught you</p></div>
+<div class="slide"><div class="center"><h1>15 minutes.<br>The README only.</h1>
+    <p class="big">Install it. Point it at your key. Finish a task.</p>
+    <p class="dim">Goose · Crush · Plandex — you pick.</p></div></div>
+<div class="slide"><h2>Why this is the real exam</h2>
+    <p>You cannot be taught 150 tools.</p>
+    <p class="big hl">You can learn to onboard yourself onto any of them.</p>
+    <p class="warn">"How do you pick up new technology?"</p>
+    <p class="dim">You <b>will</b> be asked this. Today is your answer.</p></div>
+<div class="slide"><h2>Your onboarding checklist</h2>
+    <p>Use the seven invariants as a checklist on any new tool:</p>
+    <ol><li>Where's the <b>context file</b>?</li>
+    <li>How do I see the <b>agent loop</b>?</li>
+    <li>What are the <b>permission</b> defaults?</li>
+    <li>How do I see a <b>diff</b> before it applies?</li>
+    <li>How do I <b>undo</b>?</li>
+    <li>How do I point it at <b>my provider</b>? ← usually the blocker</li>
+    <li>What <b>extensions</b> does it take?</li></ol></div>
+<div class="slide"><div class="center"><div class="kicker">Go · 15 minutes</div>
+    <h1>README only.</h1>
+    <p class="big dim">No asking me. No asking another AI how to use it.</p></div></div>
+<div class="slide"><h2>Debrief — what blocked you?</h2>
+    <div class="ask">Almost always: pointing it at a provider.</div>
+    <p class="big">That's <span class="hl">invariant #6</span>.</p>
+    <p>Now you know why we spent the morning on the difference between
+    a harness and a model.</p>
+    <p class="dim">Half the room succeeding is a completely fine outcome.</p></div>
+<div class="slide"><div class="center"><div class="kicker">The bake-off · 35 minutes</div>
+    <h1>Same bug.<br>Four harnesses.<br>Race.</h1></div></div>
+<div class="slide"><h2>Rules</h2>
+    <ul><li>One bug, none of you have seen it</li>
+    <li>Your pair picks <b>one</b> harness and commits to it</li>
+    <li>Record: <b>time</b>, and <b>did it work first try</b></li>
+    <li>You must be able to <b>explain the fix</b> to claim the win</li></ul>
+    <p class="warn">That last rule is not optional. An unexplained fix
+    doesn't count.</p></div>
+<div class="slide"><div class="kicker">Results</div><h2>Let's plot it</h2>
+    <p class="big">Harness on one axis. Time on the other.</p>
+    <div class="ask">Look at the board. Is there a pattern by tool?</div></div>
+<div class="slide"><div class="center"><h1>There's no correlation<br>with the tool.</h1>
+    <p class="big">The winners are the pairs who<br>
+    <span class="hl">decomposed the problem before prompting.</span></p></div></div>
+<div class="slide"><div class="center"><h1>The tool is not the skill.</h1>
+    <p class="big hl">You are the skill.</p></div></div>
+<div class="slide"><h2>What actually separated the winners</h2>
+    <ul><li>They <b>reproduced</b> the failure first</li>
+    <li>They formed a <b>hypothesis</b> before opening any tool</li>
+    <li>They gave the tool the <b>failing test</b>, not just the code</li>
+    <li>They <b>read the diff</b> instead of accepting it</li>
+    <li>They ran the tests <b>themselves</b></li></ul>
+    <p class="big warn">That's Day 1. With a faster keyboard.</p></div>
+<div class="slide"><h2>Two days in</h2>
+    <table><tr><th>Day 1</th><th>Day 2</th></tr>
+    <tr><td>The debugging loop</td><td>Still the loop — with a tool</td></tr>
+    <tr><td>Hypothesis first</td><td>Hypothesis <b>before prompting</b></td></tr>
+    <tr><td>Read the traceback</td><td>Read the <b>diff</b></td></tr>
+    <tr><td>Test the boundary</td><td>AI <b>writes</b> the boundary tests</td></tr>
+    <tr><td>Smallest fix</td><td>Reject the bloat</td></tr></table>
+    <p class="big">Same method. Better leverage.</p></div>
+<div class="slide"><div class="center"><div class="kicker">Tomorrow</div>
+    <h1>DELIVER</h1>
+    <p class="big">Build something end-to-end.<br>Then defend every line.</p>
+    <p class="quote">Any line you cannot explain<br>
+    is struck from your submission.</p>
+    <p class="dim">No homework. Rest. Tomorrow is the heavy day.</p></div></div>
+<div id="bar"></div><div id="num"></div>
+<div id="deck">DAY 2 · S4</div>
+<div id="hint">← → or space · F fullscreen</div>
+<script src="deck.js"></script>
+</body>
+</html>

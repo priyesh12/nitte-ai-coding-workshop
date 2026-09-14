@@ -1,0 +1,71 @@
+:root{
+  --bg:#0f1115; --fg:#f2f4f8; --dim:#98a2b3; --accent:#4ade80;
+  --warn:#fbbf24; --bad:#f87171; --info:#60a5fa; --panel:#1a1d24;
+  --line:#2a2f3a;
+  --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;background:var(--bg);color:var(--fg);
+     font:400 16px/1.55 system-ui,-apple-system,Segoe UI,sans-serif;overflow:hidden}
+.slide{position:absolute;inset:0;display:none;flex-direction:column;
+       justify-content:center;padding:4.5vh 6vw;animation:in .18s ease-out;
+       overflow-y:auto}
+.slide.on{display:flex}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+h1{font-size:clamp(2rem,6vw,4.6rem);line-height:1.05;margin:0 0 .4em;letter-spacing:-.02em}
+h2{font-size:clamp(1.35rem,3.3vw,2.7rem);line-height:1.15;margin:0 0 .6em;letter-spacing:-.015em}
+h3{font-size:clamp(1rem,1.9vw,1.5rem);margin:0 0 .4em}
+p,li{font-size:clamp(.95rem,1.75vw,1.5rem);margin:.4em 0}
+ul,ol{padding-left:1.25em;margin:.3em 0}
+li{margin:.3em 0}
+.kicker{color:var(--accent);font:700 clamp(.72rem,1.2vw,1rem)/1 var(--mono);
+        letter-spacing:.18em;text-transform:uppercase;margin-bottom:1.2em}
+.dim{color:var(--dim)} .hl{color:var(--accent);font-weight:700}
+.warn{color:var(--warn);font-weight:700} .bad{color:var(--bad);font-weight:700}
+.info{color:var(--info);font-weight:700}
+.big{font-size:clamp(1.25rem,2.8vw,2.4rem);font-weight:700;line-height:1.3}
+.sm{font-size:clamp(.8rem,1.4vw,1.15rem)}
+pre{font-family:var(--mono);background:var(--panel);border:1px solid var(--line);
+    border-left:4px solid var(--accent);border-radius:10px;
+    padding:clamp(.7rem,1.8vw,1.4rem);font-size:clamp(.72rem,1.45vw,1.25rem);
+    line-height:1.6;overflow-x:auto;margin:.6em 0;white-space:pre}
+pre.bad{border-left-color:var(--bad)} pre.warn{border-left-color:var(--warn)}
+pre.info{border-left-color:var(--info)}
+code{font-family:var(--mono);background:var(--panel);padding:.1em .38em;
+     border-radius:5px;font-size:.92em}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(.7rem,2vw,2rem)}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(.6rem,1.6vw,1.4rem)}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;
+      padding:clamp(.75rem,1.7vw,1.4rem)}
+.card h3{margin:0 0 .4em;font-size:clamp(.95rem,1.7vw,1.4rem)}
+.card p,.card li{font-size:clamp(.8rem,1.4vw,1.2rem)}
+.ok{border-top:4px solid var(--accent)} .no{border-top:4px solid var(--bad)}
+.ok h3{color:var(--accent)} .no h3{color:var(--bad)}
+.maybe{border-top:4px solid var(--warn)} .maybe h3{color:var(--warn)}
+table{border-collapse:collapse;width:100%;font-size:clamp(.78rem,1.5vw,1.25rem)}
+th,td{text-align:left;padding:.45em .6em;border-bottom:1px solid var(--line);
+      vertical-align:top}
+th{color:var(--dim);font:600 .85em/1 var(--mono);text-transform:uppercase;letter-spacing:.09em}
+.num{color:var(--accent);font-family:var(--mono);font-weight:700}
+.center{text-align:center;align-items:center}
+.quote{font-size:clamp(1.05rem,2.5vw,2.1rem);line-height:1.35;font-weight:600;
+       border-left:5px solid var(--accent);padding-left:.75em;margin:.4em 0}
+.badge{display:inline-block;background:var(--panel);border:1px solid var(--line);
+       border-radius:999px;padding:.25em .9em;font:700 clamp(.7rem,1.1vw,.95rem)/1.4 var(--mono);
+       color:var(--dim);margin:.15em .3em .15em 0}
+.badge.t{border-color:var(--accent);color:var(--accent)}
+.badge.b{border-color:var(--warn);color:var(--warn)}
+.ask{background:var(--panel);border:1px solid var(--line);border-left:4px solid var(--info);
+     border-radius:10px;padding:clamp(.7rem,1.6vw,1.2rem);margin:.5em 0}
+.ask::before{content:"ASK THE ROOM";display:block;color:var(--info);
+     font:700 .7rem/1 var(--mono);letter-spacing:.16em;margin-bottom:.5em}
+#bar{position:fixed;left:0;bottom:0;height:3px;background:var(--accent);
+     transition:width .18s;z-index:10}
+#num{position:fixed;right:1.3vw;bottom:1.2vh;color:var(--dim);
+     font:600 .8rem/1 var(--mono);z-index:10}
+#hint{position:fixed;left:1.3vw;bottom:1.2vh;color:var(--dim);
+      font:400 .72rem/1 var(--mono);z-index:10;opacity:.55}
+#deck{position:fixed;left:1.3vw;top:1.2vh;color:var(--dim);
+      font:600 .72rem/1 var(--mono);z-index:10;opacity:.65;letter-spacing:.1em}
+@media(max-width:760px){.grid,.grid3{grid-template-columns:1fr}}

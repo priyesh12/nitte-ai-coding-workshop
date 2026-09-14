@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Day 3 S2 — Git as an AI Safety Net</title>
+<link rel="stylesheet" href="deck.css">
+</head>
+<body>
+<div class="slide on"><div class="kicker">Day 3 · Session 2 · 11:30–13:00</div>
+    <h1>Git as your<br>AI safety net</h1></div>
+<div class="slide"><h2>Four commands. That's today.</h2>
+    <pre>git status                 <span class="dim"># what have I changed?</span>
+git add -A &amp;&amp; git commit -m "working: tests green"
+git diff                   <span class="dim"># what did the AI just do?</span>
+git reset --hard HEAD      <span class="dim"># undo everything uncommitted</span></pre>
+    <p class="big">Not git mastery. <span class="hl">Just the safety net.</span></p></div>
+<div class="slide"><div class="center"><h1>Commit <span class="hl">before</span><br>you prompt.</h1>
+    <p class="big dim">Then any AI change is one command away from gone.</p></div></div>
+<div class="slide"><h2>The commit that saves you</h2>
+    <pre>python3 run_tests.py          <span class="hl"># green?</span>
+git add -A
+git commit -m "working: eligibility fixed"
+
+<span class="dim"># NOW let the AI touch it</span></pre>
+    <p class="big">Message doesn't have to be beautiful.</p>
+    <p class="dim">"working: X done" is enough. The point is the
+    <b>restore point</b>, not the prose.</p></div>
+<div class="slide"><div class="kicker">Invariant #4, again</div><h2><code>git diff</code></h2>
+    <pre>+   def shortlist(students, criteria):
+-       return [s for s in students if ok(s)]
++       result = []
++       for s in students:
++           if ok(s):
++               result.append(s)
++       return result</pre>
+    <p class="big">You asked for a bug fix. It rewrote the function.</p>
+    <p class="warn">That's scope creep — and only the diff shows it.</p></div>
+<div class="slide"><h2>Reading a diff</h2>
+    <table><tr><th>Symbol</th><th>Means</th></tr>
+    <tr><td><code class="bad">-</code> red line</td><td>Removed</td></tr>
+    <tr><td><code class="hl">+</code> green line</td><td>Added</td></tr>
+    <tr><td>plain line</td><td>Unchanged, shown for context</td></tr>
+    <tr><td><code>@@ -12,7 +12,9 @@</code></td><td>Where in the file</td></tr></table>
+    <p class="big">Look for changes you <span class="warn">didn't ask for</span>.
+    That's the whole skill.</p></div>
+<div class="slide"><div class="center"><div class="kicker">Live demo</div>
+    <h1>Let's wreck the repo<br>on purpose.</h1>
+    <p class="big">Commit. Ask an AI to "make it more extensible."<br>
+    Watch what arrives.</p></div></div>
+<div class="slide"><h2>What we just saw</h2>
+    <ol><li>Committed a working state</li>
+    <li>Asked for "improvement"</li>
+    <li>Got 40 lines where 6 were fine</li>
+    <li><b>Tests still passed</b></li>
+    <li><code>git reset --hard HEAD</code> — gone</li></ol>
+    <p class="big warn">Step 4 is the scary one.</p></div>
+<div class="slide"><div class="center"><h1>Green tests don't mean<br>
+    <span class="hl">it was a good change.</span></h1>
+    <p class="big dim">Tests check behaviour.<br>
+    They don't check whether you can still explain it.</p></div></div>
+<div class="slide"><h2>The AI trap list — from your own three days</h2>
+    <table><tr><th>Trap</th><th>Looks like</th></tr>
+    <tr><td>Bloat</td><td>40 lines where 6 would do</td></tr>
+    <tr><td>Invented APIs</td><td>A method that doesn't exist</td></tr>
+    <tr><td>Wrong defaults</td><td><code>.get(k, 0)</code> when <code>None</code> was meant</td></tr>
+    <tr><td>Over-abstraction</td><td>A class hierarchy for one function</td></tr>
+    <tr><td>Confident wrongness</td><td>A docstring that contradicts the code</td></tr>
+    <tr><td>Scope creep</td><td>You asked for a fix, it rewrote the file</td></tr></table></div>
+<div class="slide"><h2>Which trap costs you the viva?</h2>
+    <div class="ask">Bloat and over-abstraction.</div>
+    <p>Invented APIs crash immediately — you'll catch those.</p>
+    <p class="big warn">Bloat <b>passes every test</b> and then you can't
+    explain why there are 40 lines.</p>
+    <p class="quote">"Why is this a class?"<br>"…the AI did that."<br>
+    Zero marks.</p></div>
+<div class="slide"><h2>Your 60-second review</h2>
+    <ul><li>Read <b>every</b> line</li>
+    <li>Does the docstring match the code?</li>
+    <li><code>git diff</code> — did it touch anything I didn't ask about?</li>
+    <li>Run the tests. Not just the happy path.</li>
+    <li>Test the boundary. Test empty.</li>
+    <li>Could this be shorter?</li>
+    <li><b>Can I explain every line out loud?</b></li></ul>
+    <p class="warn">If the last one is no — you cannot submit it.</p></div>
+<div class="slide"><div class="kicker">Before lunch</div>
+    <h2>Everyone commits a clean state</h2>
+    <pre>python3 run_tests.py
+git add -A
+git commit -m "working: end of day 3 morning"</pre>
+    <p class="big">This is your restore point for the assessment.</p>
+    <p class="dim">Hands up when it's done.</p></div>
+<div class="slide"><h2>Session 2 close</h2>
+    <p class="quote">Commit before you prompt.<br>
+    Read the diff before you accept.<br>
+    Reset when it goes wrong.</p>
+    <p class="big warn">After lunch: 90 minutes, graded, hidden tests.</p></div>
+<div id="bar"></div><div id="num"></div>
+<div id="deck">DAY 3 · S2</div>
+<div id="hint">← → or space · F fullscreen</div>
+<script src="deck.js"></script>
+</body>
+</html>

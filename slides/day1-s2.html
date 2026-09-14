@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Day 1 S2 — Tracebacks & Print Logging</title>
+<link rel="stylesheet" href="deck.css">
+</head>
+<body>
+<div class="slide on"><div class="kicker">Day 1 · Session 2 · 11:30–13:00</div>
+    <h1>Tracebacks<br>&amp; print logging</h1>
+    <p class="big dim">Reading what Python is telling you</p></div>
+<div class="slide"><h2>Read it BOTTOM-UP</h2>
+    <pre>Traceback (most recent call last):        <span class="dim">ignore</span>
+  File "run_tests.py", line 42, in main  <span class="dim">← 3. how you got here</span>
+  File "bug_02.py", line 12              <span class="warn">← 2. WHERE</span>
+    return total / len(cgpa)
+TypeError: object of type 'float' has no len()
+<span class="hl">← 1. WHAT — START HERE</span></pre>
+    <p class="big">Last line = <b>what</b>. Line above = <b>where</b>.</p></div>
+<div class="slide"><div class="center"><h1>Students read<br>top-down and panic.</h1>
+    <p class="big hl">Read the last line first.</p>
+    <p class="big dim">Usually that's enough.</p></div></div>
+<div class="slide"><h2>The error decoder</h2>
+    <table><tr><th>Error</th><th>Plain English</th><th>Look for</th></tr>
+    <tr><td><code>SyntaxError</code></td><td>Couldn't read the file</td><td>Missing <code>:</code> <code>)</code> <code>"</code></td></tr>
+    <tr><td><code>IndentationError</code></td><td>Spacing inconsistent</td><td>Tabs mixed with spaces</td></tr>
+    <tr><td><code>NameError</code></td><td>No such name</td><td>Typo; used before defined</td></tr>
+    <tr><td><code>TypeError</code></td><td>Wrong kind of thing</td><td><code>str + int</code>, <code>len()</code> of a number</td></tr>
+    <tr><td><code>AttributeError</code></td><td>No such <code>.thing</code></td><td>It's probably <code>None</code></td></tr>
+    <tr><td><code>IndexError</code></td><td>Past the end</td><td>Off-by-one</td></tr>
+    <tr><td><code>KeyError</code></td><td>No such dict key</td><td><code>.get()</code> — mind the default</td></tr>
+    <tr><td><code>ZeroDivisionError</code></td><td>Divided by zero</td><td>Empty list, unguarded <code>len()</code></td></tr>
+    <tr><td><code>ValueError</code></td><td>Right type, impossible value</td><td><code>int("abc")</code></td></tr></table></div>
+<div class="slide"><h2><code>TypeError</code> — read the type</h2>
+    <pre class="bad">TypeError: object of type 'float' has no len()</pre>
+    <p>It tells you: something is a <b>float</b> where you expected
+    something with a length.</p>
+    <pre>total / len(cgpa)     <span class="bad"># cgpa is one float</span>
+total / len(cgpas)    <span class="hl"># cgpas is the list</span></pre>
+    <p class="big">The type in the message <span class="hl">is</span> the clue.</p></div>
+<div class="slide"><h2><code>AttributeError</code> — usually <code>None</code></h2>
+    <pre class="bad">AttributeError: 'NoneType' object has no attribute 'name'</pre>
+    <p>Something returned <code>None</code> and you used it anyway.</p>
+    <pre>student = find_student(roll_no)   <span class="dim"># returns None if not found</span>
+print(student.name)              <span class="bad"># boom</span></pre>
+    <div class="ask">Where did the <code>None</code> come from?
+    That's the real question — not where it crashed.</div></div>
+<div class="slide"><h2>The caret lies (a little)</h2>
+    <pre class="bad">def greet(name, company)
+                        ^
+SyntaxError: expected ':'</pre>
+    <p>The caret shows where the parser <b>gave up</b>,
+    not always where you went wrong.</p>
+    <p class="big warn">For SyntaxError, always check the line ABOVE.</p>
+    <p class="dim">An unclosed bracket on line 8 usually reports on line 9.</p></div>
+<div class="slide"><h2>Three print techniques</h2>
+    <pre>print(f"{cgpa=}")     <span class="dim"># cgpa=7.3    name AND value</span>
+print(repr(cgpa))     <span class="dim"># 7.300000000000001</span>
+breakpoint()          <span class="dim"># stop here.  n / c / q</span></pre>
+    <p class="big"><code>f"{x=}"</code> is the one to build a habit on.</p>
+    <p class="dim">You never mislabel a variable again.</p></div>
+<div class="slide"><div class="center"><h1><code>repr()</code> finds bugs<br>
+    <span class="hl">that <code>print()</code> hides.</span></h1>
+    <pre>print(7.300000000000001)        <span class="dim"># 7.3</span>
+print(repr(7.300000000000001))  <span class="hl"># 7.300000000000001</span></pre>
+    <p class="big warn"><code>print()</code> is lying to you to be helpful.</p></div></div>
+<div class="slide"><h2><code>breakpoint()</code> — the 4 commands</h2>
+    <pre>breakpoint()          <span class="dim"># put this line in your code</span>
+
+(Pdb) <span class="hl">n</span>     next line
+(Pdb) <span class="hl">c</span>     continue (run to the end)
+(Pdb) <span class="hl">q</span>     quit
+(Pdb) <span class="hl">p x</span>   print the value of x</pre>
+    <p>You can type <b>any</b> Python at the <code>(Pdb)</code> prompt.</p>
+    <p class="dim">No install. Built into Python. Works on a locked-down lab machine.</p></div>
+<div class="slide"><h2>Where to put the print</h2>
+    <p>Not at the crash. <b>Before</b> it — where the value is still good.</p>
+    <pre>def shortlist(students, min_cgpa):
+    print(f"{len(students)=}")          <span class="hl"># entry</span>
+    result = []
+    for s in students:
+        print(f"{s['name']=} {s['cgpa']=}")   <span class="hl"># each step</span>
+        ...
+    print(f"{len(result)=}")            <span class="hl"># exit</span></pre>
+    <p class="big">Entry · each step · exit. That's the pattern.</p></div>
+<div class="slide"><div class="center"><div class="kicker">Bug Hunt #2</div>
+    <h1>bug_04_toppers.py</h1>
+    <p class="big warn">This one does not crash.</p>
+    <p class="big">It just keeps the wrong students.</p></div></div>
+<div class="slide"><div class="kicker">Deep dive</div><h2>Mutating while iterating</h2>
+    <pre class="bad">for student in students:
+    if not student["placed"]:
+        students.remove(student)</pre>
+    <pre>index:  0       1        2
+      [Asha,  Bhavya,  Chetan]
+       ok     remove   
+after: [Asha,  Chetan]
+              ^ iterator now at index 2 = past the end
+                <span class="bad">Chetan was never checked</span></pre>
+    <p class="big">The list shrank under the loop.</p></div>
+<div class="slide"><h2>Why it passes one test and fails the next</h2>
+    <table><tr><th>Input</th><th>Result</th></tr>
+    <tr><td>One unplaced student</td><td class="hl">Correct ✓</td></tr>
+    <tr><td><b>Two unplaced, side by side</b></td><td class="bad">Skips one ✗</td></tr>
+    <tr><td>Everyone unplaced</td><td class="bad">Keeps half ✗</td></tr></table>
+    <p class="big warn">This is what a hidden test looks like.</p>
+    <p class="dim">Your visible test passed. You shipped it. You failed.</p></div>
+<div class="slide"><h2>The fix: build a new list</h2>
+    <pre class="bad">for student in students:              <span class="bad"># mutating</span>
+    if not student["placed"]:
+        students.remove(student)</pre>
+    <pre>return [s for s in students if s["placed"]]   <span class="hl"># new list</span></pre>
+    <p class="big">Never modify a list you're looping over.</p>
+    <p class="dim">Build a new one, or loop over a copy: <code>for s in students[:]</code></p></div>
+<div class="slide"><div class="center"><h1>A green test proves<br>the test passed.</h1>
+    <p class="big dim">Not that your code is right.</p></div></div>
+<div class="slide"><div class="kicker">Deep dive</div><h2>The mutable default argument</h2>
+    <pre class="bad">def register(name, drive=[]):
+    drive.append(name)
+    return drive
+
+register("Asha")    <span class="dim"># ['Asha']</span>
+register("Bhavya")  <span class="bad"># ['Asha', 'Bhavya']  ← ?!</span></pre>
+    <p>The <code>[]</code> is created <b>once</b>, when the function is
+    <b>defined</b> — not on each call.</p>
+    <p class="big warn">Every call shares the same list.</p></div>
+<div class="slide"><h2>The fix, and why it's an interview favourite</h2>
+    <pre>def register(name, drive=None):
+    if drive is None:
+        drive = []
+    drive.append(name)
+    return drive</pre>
+    <div class="ask">Try it yourself: <code>print(register.__defaults__)</code>
+    between calls. You can watch the list grow.</div>
+    <p class="dim">Asked constantly in Python interviews. Worth memorising
+    as a pattern, not a rule.</p></div>
+<div class="slide"><div class="kicker">Deep dive</div><h2>Floats don't do what you think</h2>
+    <pre>&gt;&gt;&gt; 0.1 + 0.2
+0.30000000000000004
+
+&gt;&gt;&gt; 6.9 + 0.4
+7.300000000000001
+
+&gt;&gt;&gt; 6.9 + 0.4 == 7.3
+<span class="bad">False</span></pre>
+    <p>Computers store numbers in binary. <code>0.1</code> in binary is
+    like <code>1/3</code> in decimal — it never ends.</p></div>
+<div class="slide"><h2>Never use <code>==</code> on floats</h2>
+    <pre class="bad">if cgpa == 7.3:          <span class="bad"># fails for computed values</span></pre>
+    <pre>if abs(cgpa - 7.3) &lt; 1e-9:    <span class="hl"># tolerance</span></pre>
+    <p class="big">Or better: <span class="hl">don't use floats for marks at all.</span></p>
+    <p class="dim">Store CGPA × 100 as an integer. Or use <code>Decimal</code>.
+    Banks don't store money as floats, and neither should you.</p>
+    <div class="ask">Which fix would you defend in an interview — and why?
+    Both are right. Say so.</div></div>
+<div class="slide"><div class="center"><div class="kicker">Your turn · 35 minutes</div>
+    <h1>tier2</h1>
+    <pre>python3 run_tests.py bugs/tier2</pre>
+    <p class="big">Use <code>f"{x=}"</code> and <code>repr()</code>.</p>
+    <p class="dim">Hypothesis first. Swap driver every 10 minutes.</p></div></div>
+<div class="slide"><div class="kicker">Buffer · stretch</div><h2><code>is</code> vs <code>==</code></h2>
+    <pre>a = [1, 2]
+b = [1, 2]
+print(a == b)    <span class="dim"># True  — same contents</span>
+print(a is b)    <span class="dim"># False — different objects</span>
+
+x = "CSE"
+y = "CSE"
+print(x is y)    <span class="warn"># True... sometimes. Don't rely on it.</span></pre>
+    <p class="big"><code>==</code> asks "same value?" · <code>is</code> asks
+    "same object?"</p>
+    <p class="dim">Only use <code>is</code> for <code>None</code>,
+    <code>True</code>, <code>False</code>.</p></div>
+<div class="slide"><div class="kicker">Buffer · stretch</div><h2>Shallow vs deep copy</h2>
+    <pre>original = [["Asha"], ["Bhavya"]]
+copy = original[:]          <span class="dim"># shallow</span>
+copy[0].append("Chetan")
+print(original)             <span class="bad"># [['Asha','Chetan'], ['Bhavya']]</span></pre>
+    <p>The outer list is new. The inner lists are <b>the same objects</b>.</p>
+    <pre>import copy
+deep = copy.deepcopy(original)   <span class="hl"># fully independent</span></pre></div>
+<div class="slide"><div class="kicker">Session 2 close</div><h2>What you should leave with</h2>
+    <ul><li>Read tracebacks <b>bottom-up</b> — last line first</li>
+    <li><code>f"{x=}"</code> and <code>repr()</code> as reflexes</li>
+    <li>Never mutate a list you're iterating</li>
+    <li>Never <code>==</code> on floats</li>
+    <li>Mutable defaults are evaluated once</li></ul>
+    <p class="big">After lunch: your first AI contact —
+    and some strict rules about it.</p></div>
+<div id="bar"></div><div id="num"></div>
+<div id="deck">DAY 1 · S2</div>
+<div id="hint">← → or space · F fullscreen</div>
+<script src="deck.js"></script>
+</body>
+</html>
