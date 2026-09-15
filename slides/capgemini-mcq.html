@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Capgemini-Style MCQ Clinic</title>
+<link rel="stylesheet" href="deck.css">
+</head>
+<body>
+<div class="slide on"><div class="kicker">Day 1 · Placement Practice · 35–45 minutes</div>
+    <h1>MCQ<br><span class="hl">CLINIC</span></h1>
+    <p class="big dim">Pseudocode, logic, DSA &amp; AI literacy</p>
+    <p class="dim">Capgemini-style practice — not an official paper</p></div>
+
+<div class="slide"><h2>What we are practising</h2>
+    <ul>
+    <li>Read a short program carefully</li>
+    <li>Track values one line at a time</li>
+    <li>Recognise the data structure or rule</li>
+    <li>Check boundaries and edge cases</li>
+    <li>Guide and verify an AI assistant</li>
+    </ul>
+    <p class="dim">Recent public reports mention these themes, but the exact campus paper can vary.</p></div>
+
+<div class="slide"><h2>How we play</h2>
+    <div class="grid3">
+    <div class="card"><h3>1 · Predict</h3><p>60 seconds. No running code.</p></div>
+    <div class="card"><h3>2 · Commit</h3><p>Choose an answer with your pair.</p></div>
+    <div class="card"><h3>3 · Explain</h3><p>Give the rule, not just the letter.</p></div>
+    </div>
+    <p class="big warn">A lucky guess earns no learning.</p></div>
+
+<div class="slide"><div class="kicker">Question 1 · Arrays</div><h2>What is printed?</h2>
+    <pre>A = [4, 7, 9, 2]
+PRINT A[2]</pre>
+    <table><tr><td>A</td><td>4</td></tr><tr><td>B</td><td>7</td></tr>
+    <tr><td>C</td><td>9</td></tr><tr><td>D</td><td>2</td></tr></table>
+    <div class="ask">Assume indexing starts at zero. Pick one answer.</div></div>
+
+<div class="slide"><div class="kicker">Question 1 · Answer</div><h2><span class="hl">C — 9</span></h2>
+    <pre>index:  0   1   2   3
+value:  4   7   9   2</pre>
+    <p>Index 2 means the third item. Do not silently start counting at one.</p></div>
+
+<div class="slide"><div class="kicker">Question 2 · Loops</div><h2>What is printed?</h2>
+    <pre>total = 0
+FOR i = 0; i &lt; 4; i = i + 1
+    total = total + i
+PRINT total</pre>
+    <table><tr><td>A</td><td>3</td><td>B</td><td>4</td></tr>
+    <tr><td>C</td><td>6</td><td>D</td><td>10</td></tr></table></div>
+
+<div class="slide"><div class="kicker">Question 2 · Answer</div><h2><span class="hl">C — 6</span></h2>
+    <pre>i = 0  → total = 0
+i = 1  → total = 1
+i = 2  → total = 3
+i = 3  → total = 6
+i = 4  → stop</pre>
+    <p>The condition is <code>i &lt; 4</code>, so 4 is never included.</p></div>
+
+<div class="slide"><div class="kicker">Question 3 · Operators</div><h2>Assume C/Java-style <code>++</code>. What is printed?</h2>
+    <pre>x = 5
+y = x++
+z = ++x
+PRINT x, y, z</pre>
+    <table><tr><td>A</td><td>5, 5, 6</td><td>B</td><td>7, 5, 7</td></tr>
+    <tr><td>C</td><td>7, 6, 7</td><td>D</td><td>6, 5, 6</td></tr></table></div>
+
+<div class="slide"><div class="kicker">Question 3 · Answer</div><h2><span class="hl">B — 7, 5, 7</span></h2>
+    <ul><li><code>x++</code>: use 5, then increase <code>x</code> to 6</li>
+    <li><code>++x</code>: increase <code>x</code> to 7, then use 7</li>
+    <li>Final values: <code>x=7</code>, <code>y=5</code>, <code>z=7</code></li></ul>
+    <p class="dim">Trace the state after every line.</p></div>
+
+<div class="slide"><div class="kicker">Question 4 · Stack</div><h2>What does the program print?</h2>
+    <pre>PUSH(10)
+PUSH(20)
+PRINT POP()
+PUSH(30)
+PRINT POP()</pre>
+    <table><tr><td>A</td><td>10, 20</td><td>B</td><td>20, 30</td></tr>
+    <tr><td>C</td><td>30, 20</td><td>D</td><td>10, 30</td></tr></table></div>
+
+<div class="slide"><div class="kicker">Question 4 · Answer</div><h2><span class="hl">B — 20, 30</span></h2>
+    <p>A stack is <b>LIFO</b>: Last In, First Out.</p>
+    <pre>top → 20   POP → 20
+top → 30   POP → 30</pre>
+    <p class="dim">A queue is FIFO: First In, First Out.</p></div>
+
+<div class="slide"><div class="kicker">Question 5 · Bitwise operators</div><h2>What is <code>5 &amp; 3</code>?</h2>
+    <pre>5 = 101
+3 = 011
+    ---
+AND = ?</pre>
+    <table><tr><td>A</td><td>0</td><td>B</td><td>1</td></tr>
+    <tr><td>C</td><td>7</td><td>D</td><td>8</td></tr></table></div>
+
+<div class="slide"><div class="kicker">Question 5 · Answer</div><h2><span class="hl">B — 1</span></h2>
+    <pre>  101
+&amp; 011
+  ---
+  001  = 1</pre>
+    <p>AND produces 1 only where both bits are 1.</p></div>
+
+<div class="slide"><div class="kicker">Question 6 · Recursion</div><h2>What is printed?</h2>
+    <pre>FUNCTION f(n)
+    IF n == 0: RETURN 0
+    RETURN n + f(n - 1)
+
+PRINT f(3)</pre>
+    <table><tr><td>A</td><td>3</td><td>B</td><td>5</td></tr>
+    <tr><td>C</td><td>6</td><td>D</td><td>9</td></tr></table></div>
+
+<div class="slide"><div class="kicker">Question 6 · Answer</div><h2><span class="hl">C — 6</span></h2>
+    <pre>f(3) = 3 + f(2)
+     = 3 + 2 + f(1)
+     = 3 + 2 + 1 + f(0)
+     = 6</pre>
+    <p>Find the base case first. It is where recursion stops.</p></div>
+
+<div class="slide"><div class="kicker">Question 7 · Boundaries</div><h2>Which condition matches the rule?</h2>
+    <p class="quote">“CGPA of 7.0 or above, and at most 1 backlog.”</p>
+    <table><tr><th>Option</th><th>Condition</th></tr>
+    <tr><td>A</td><td><code>cgpa &gt; 7.0 and backlogs &lt; 1</code></td></tr>
+    <tr><td>B</td><td><code>cgpa &gt;= 7.0 and backlogs &lt;= 1</code></td></tr>
+    <tr><td>C</td><td><code>cgpa &gt; 7.0 and backlogs &lt;= 1</code></td></tr></table></div>
+
+<div class="slide"><div class="kicker">Question 7 · Answer</div><h2><span class="hl">B</span></h2>
+    <p>“Or above” includes 7.0. “At most 1” includes 1.</p>
+    <pre>7.0  → eligible
+ 1   → allowed</pre>
+    <p class="big warn">Boundaries are where hidden tests live.</p></div>
+
+<div class="slide"><div class="kicker">Question 8 · Complexity</div><h2>What is the time complexity?</h2>
+    <pre>FOR i = 0; i &lt; n; i = i + 1
+    FOR j = 0; j &lt; n; j = j + 1
+        compare(A[i], A[j])</pre>
+    <table><tr><td>A</td><td>O(1)</td><td>B</td><td>O(log n)</td></tr>
+    <tr><td>C</td><td>O(n)</td><td>D</td><td>O(n²)</td></tr></table></div>
+
+<div class="slide"><div class="kicker">Question 8 · Answer</div><h2><span class="hl">D — O(n²)</span></h2>
+    <p>The outer loop runs <code>n</code> times. Each pass runs another <code>n</code>-step loop.</p>
+    <pre>n × n = n²</pre>
+    <p class="dim">Correct on a small sample does not mean fast enough at scale.</p></div>
+
+<div class="slide"><div class="kicker">Question 9 · AI literacy</div><h2>Which prompt gives an AI coding agent the best starting point?</h2>
+    <table><tr><td>A</td><td>Write the code quickly.</td></tr>
+    <tr><td>B</td><td>Do whatever is needed.</td></tr>
+    <tr><td>C</td><td>Here are the inputs, outputs, constraints, edge cases, and test command. First explain your plan; do not edit yet.</td></tr>
+    <tr><td>D</td><td>Make it perfect.</td></tr></table></div>
+
+<div class="slide"><div class="kicker">Question 9 · Answer</div><h2><span class="hl">C</span></h2>
+    <p>A strong prompt gives the agent context, a precise task, constraints, edge cases, and a verification command.</p>
+    <p class="big">Ask for the plan before asking for code.</p></div>
+
+<div class="slide"><div class="kicker">Question 10 · AI validation</div><h2>The AI gives you code that looks correct. What next?</h2>
+    <table><tr><td>A</td><td>Submit immediately.</td></tr>
+    <tr><td>B</td><td>Ask the AI if it is correct.</td></tr>
+    <tr><td>C</td><td>Inspect the diff, run tests, and test empty and boundary inputs.</td></tr>
+    <tr><td>D</td><td>Rewrite everything yourself.</td></tr></table></div>
+
+<div class="slide"><div class="kicker">Question 10 · Answer</div><h2><span class="hl">C</span></h2>
+    <pre>Understand → Plan → Prompt → Inspect → Run → Test edges → Explain</pre>
+    <p>The agent can generate code. The candidate owns correctness.</p></div>
+
+<div class="slide"><div class="kicker">Pair challenge · 10 minutes</div><h2>Write your own MCQ</h2>
+    <ol><li>Choose an array, loop, stack, queue, boundary, or AI prompt.</li>
+    <li>Write a short question with four options.</li>
+    <li>Swap with another pair.</li>
+    <li>Explain the answer using a rule.</li></ol>
+    <div class="ask">No trick questions. The answer must be provable from the prompt.</div></div>
+
+<div class="slide"><div class="center"><h1>The MCQ habit</h1>
+    <p class="big">Read → trace → check the edge → choose → explain</p>
+    <p class="quote">For AI-assisted coding:<br>understand → prompt → inspect → test</p>
+    <p class="dim">Use the placement cell's actual Capgemini brief as the final source of truth.</p></div></div>
+
+<div id="bar"></div><div id="num"></div>
+<div id="deck">CAPGEMINI-STYLE MCQ CLINIC</div>
+<div id="hint">← → or space · F fullscreen</div>
+<script src="deck.js"></script>
+</body>
+</html>
